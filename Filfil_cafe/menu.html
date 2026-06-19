@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FILFIL Café Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    padding: 110px 5% 40px;
+    color: #fff;
+}
+
+/* Page header */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    max-width: 1300px;
+    margin: 0 auto 30px;
+}
+
+.page-header h1 {
+    font-size: 2.4rem;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    font-weight: 800;
+}
+
+.page-header-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(56, 239, 125, 0.25);
+    border: 1px solid rgba(56, 239, 125, 0.5);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.btn-download:hover {
+    background: #38ef7d;
+    color: #000;
+    transform: translateX(3px);
+    box-shadow: 0 5px 15px rgba(56, 239, 125, 0.4);
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card .photo-slot {
+    cursor: pointer;
+}
+
+/* Category Filter Buttons */
+.menu-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 50px;
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menu-buttons button {
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.menu-buttons button:hover,
+.menu-buttons button.active {
+    background: linear-gradient(135deg, #dc2626, #16a34a);
+    border-color: transparent;
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.35);
+    transform: translateY(-3px);
+    color: #fff;
+}
+
+/* Card Grid Styling */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 35px;
+    max-width: 1300px;
+    margin: auto;
+}
+
+.flip-card {
+    background: transparent;
+    height: 400px;
+    perspective: 1200px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Front Side styling */
+.flip-card-front {
+    background: #111;
+    display: flex;
+    flex-direction: column;
+}
+
+.photo-slot {
+    flex: 1;
+    position: relative;
+    background: linear-gradient(145deg, #7f1d1d 0%, #14532d 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+}
+
+.photo-slot::after {
+    content: 'Add photo';
+    position: absolute;
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    pointer-events: none;
+}
+
+.photo-slot img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.photo-slot img.loaded {
+    z-index: 1;
+}
+
+.photo-slot:has(img.loaded)::after {
+    display: none;
+}
+
+.flip-card:hover .photo-slot img.loaded {
+    transform: scale(1.05);
+}
+
+.item-info .price-row .item-price-front {
+    margin-top: 0;
+}
+
+.item-info {
+    padding: 16px 20px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    text-align: center;
+}
+
+.item-title {
+    position: static;
+    width: auto;
+    padding: 0;
+    background: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+}
+
+.item-price-front {
+    margin-top: 6px;
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffd700;
+}
+
+/* Back Side styling */
+.flip-card-back {
+    background: rgba(255, 255, 255, 0.95);
+    color: #1a1a1a;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+}
+
+.flip-card-back h3 {
+    color: #dc2626;
+    font-size: 22px;
+    margin-bottom: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.flip-card-back p {
+    display: none;
+}
+
+.price {
+    font-size: 28px;
+    font-weight: 800;
+    color: #16a34a;
+    background: rgba(22, 163, 74, 0.15);
+    padding: 4px 16px;
+    border-radius: 12px;
+}
+
+.badge {
+    position: absolute;
+    top: 15px;
+    right: -30px;
+    background: #ff4d4d;
+    color: white;
+    padding: 6px 35px;
+    font-size: 12px;
+    font-weight: bold;
+    transform: rotate(45deg);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.hidden {
+    display: none;
+}
+
+.flip-card-front {
+    position: relative;
+}
+
+/* Responsive fixes */
+@media(max-width: 900px) {
+    body {
+        padding: 88px 16px 70px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .page-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .page-header-actions {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .btn-download {
+        width: 100%;
+        justify-content: center;
+        font-size: 14px;
+    }
+
+    .menu-buttons {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        margin-bottom: 32px;
+        padding-bottom: 4px;
+    }
+
+    .menu-buttons::-webkit-scrollbar {
+        display: none;
+    }
+
+    .menu-buttons button {
+        flex-shrink: 0;
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .flip-card {
+        height: 380px;
+    }
+
+    .item-title {
+        font-size: 16px;
+    }
+
+    .item-price-front {
+        font-size: 20px;
+    }
+
+    .flip-card-back h3 {
+        font-size: 18px;
+    }
+
+    .flip-card-back {
+        padding: 20px;
+    }
+
+    .price {
+        font-size: 24px;
+    }
+}
+
+@media(max-width: 480px) {
+    body {
+        padding: 82px 12px 60px;
+    }
+
+    .flip-card {
+        height: 360px;
+    }
+
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+    <a href="Index.html" class="logo-link"><img src="logo.jpeg" alt="FILFIL Café"></a>
+    <button type="button" class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="nav-menu" id="nav-menu">
+        <ul>
+            <li><a href="Index.html#home">Home</a></li>
+            <li><a href="Index.html#menu">Best Sellers</a></li>
+            <li><a href="menu.html" class="active">Full Menu</a></li>
+            <li><a href="Index.html#about">About</a></li>
+            <li><a href="Index.html#contact">Contact</a></li>
+        </ul>
+        <div class="nav-contact">
+            <a href="mailto:info@filfilcafe.com">📧 info@filfilcafe.com</a>
+            <a href="https://wa.me/917997866006" target="_blank" rel="noopener">📞 +91 799 786 6006</a>
+        </div>
+    </div>
+    <div class="nav-actions">
+        <button type="button" class="cart-toggle-btn" id="cart-toggle">🛒 <span id="cart-count">0</span></button>
+        <a href="menu.pdf" class="nav-pdf-btn" download="menu.pdf"><span>↓ PDF</span></a>
+        <a href="menu.html" class="nav-order-btn"><span>Order</span></a>
+    </div>
+</nav>
+<div class="nav-overlay" id="nav-overlay"></div>
+
+<div class="page-header">
+    <h1>FILFIL Café Menu</h1>
+    <div class="page-header-actions">
+        <a href="menu.pdf" class="btn-download" download="menu.pdf">↓ Download Full Menu</a>
+    </div>
+</div>
+
+<div class="menu-buttons" id="menu-buttons"></div>
+
+<div class="menu-grid" id="menu-grid"></div>
+
+<script src="nav.js"></script>
+<script src="cart.js"></script>
+<script>
+const categories = [
+    { id: 'burger', label: '🍔 Burgers' },
+    { id: 'combo', label: '🍱 Combos' },
+    { id: 'wrap', label: '🌯 Wraps' },
+    { id: 'fries', label: '🍟 Fries' },
+    { id: 'salad', label: '🥗 Salads' },
+    { id: 'quickbite', label: '🍗 Quick Bites' },
+    { id: 'sandwich', label: '🥪 Sandwiches' },
+    { id: 'momo', label: '🥟 Momos' },
+    { id: 'waffle', label: '🧇 Waffles' },
+    { id: 'dessert', label: '🍰 Desserts' },
+    { id: 'mocktail', label: '🍹 Mocktails' },
+    { id: 'beverage', label: '🥤 Beverages' },
+    { id: 'icecream', label: '🍦 Ice Creams' }
+];
+
+const menuItems = [
+    { category: 'burger', name: 'Mini Beef', price: '₹79' },
+    { category: 'burger', name: 'Classic Beef', price: '₹169' },
+    { category: 'burger', name: 'UFO Beef', price: '₹199' },
+    { category: 'burger', name: 'Signature Beef', price: '₹199' },
+    { category: 'burger', name: 'Double Decker Beef', price: '₹249' },
+    { category: 'burger', name: 'Mini Chicken (Zinger/Classic)', price: '₹79' },
+    { category: 'burger', name: 'Classic Chicken', price: '₹159' },
+    { category: 'burger', name: 'Chicken Zinger', price: '₹169' },
+    { category: 'burger', name: 'UFO Chicken', price: '₹199' },
+    { category: 'burger', name: 'Signature Chicken', price: '₹199' },
+    { category: 'burger', name: 'Double Decker Chicken', price: '₹249' },
+
+    { category: 'combo', name: 'Mini Burger + French Fries + Juice', price: '₹149' },
+    { category: 'combo', name: 'Mini Burger + Chicken Popcorn/Cheese Balls + Juice', price: '₹179' },
+    { category: 'combo', name: 'Meal Box (4 Mini Burgers + Popcorn/Cheese Balls + Fries + 2 Campa)', price: '₹349' },
+
+    { category: 'wrap', name: 'Falafel Wrap', price: '₹119' },
+    { category: 'wrap', name: 'Falafel Sabbah Wrap', price: '₹139' },
+    { category: 'wrap', name: 'Classic Beef Wrap', price: '₹129' },
+    { category: 'wrap', name: 'Signature Beef Wrap', price: '₹159' },
+    { category: 'wrap', name: 'Classic Chicken Wrap', price: '₹129' },
+    { category: 'wrap', name: 'Signature Chicken Wrap', price: '₹159' },
+    { category: 'wrap', name: 'Chicken Zinger Wrap', price: '₹139' },
+
+    { category: 'fries', name: 'Plain French Fries', price: '₹79' },
+    { category: 'fries', name: 'Peri Peri French Fries', price: '₹99' },
+    { category: 'fries', name: 'Cheese Loaded Fries', price: '₹139' },
+    { category: 'fries', name: 'Chicken Loaded Fries', price: '₹149' },
+    { category: 'fries', name: 'Beef Loaded Fries', price: '₹179' },
+
+    { category: 'salad', name: 'Sprouts Salad', price: '₹149' },
+    { category: 'salad', name: 'Veggie Salad', price: '₹149' },
+    { category: 'salad', name: 'Chicken Salad', price: '₹179' },
+    { category: 'salad', name: 'Beef Salad', price: '₹199' },
+
+    { category: 'quickbite', name: 'Chicken Popcorn', price: '₹119' },
+    { category: 'quickbite', name: 'Chicken Cheese Balls', price: '₹129' },
+    { category: 'quickbite', name: 'Chicken Strips', price: '₹149' },
+    { category: 'quickbite', name: 'Chicken Nuggets', price: '₹149' },
+    { category: 'quickbite', name: 'Chicken Kebab Shots', price: '₹149' },
+    { category: 'quickbite', name: 'Cheesy Pizza Fingers', price: '₹119' },
+    { category: 'quickbite', name: 'Cheese & Jalapeño Poppers', price: '₹129' },
+    { category: 'quickbite', name: 'Cheese Corn Triangles', price: '₹129' },
+    { category: 'quickbite', name: 'Chilli Garlic Potato Shots', price: '₹129' },
+    { category: 'quickbite', name: 'Veggie Pizza Pockets', price: '₹149' },
+
+    { category: 'sandwich', name: 'Veg Sandwich', price: '₹79' },
+    { category: 'sandwich', name: 'Veg Cheese Sandwich', price: '₹99' },
+    { category: 'sandwich', name: 'Chicken Sandwich', price: '₹79' },
+    { category: 'sandwich', name: 'Chicken Cheese Sandwich', price: '₹99' },
+    { category: 'sandwich', name: 'Chicken Tikka Sandwich', price: '₹119' },
+
+    { category: 'momo', name: 'Veg Steamed Momos', price: '₹99' },
+    { category: 'momo', name: 'Chicken Steamed Momos', price: '₹119' },
+    { category: 'momo', name: 'Veg Fried Momos', price: '₹119' },
+    { category: 'momo', name: 'Chicken Fried Momos', price: '₹129' },
+    { category: 'momo', name: 'Veg Kurkure Momos', price: '₹139' },
+    { category: 'momo', name: 'Chicken Kurkure Momos', price: '₹149' },
+
+    { category: 'waffle', name: 'Popsicle', price: '₹69' },
+    { category: 'waffle', name: 'Triple Chocolate Bubble', price: '₹199' },
+    { category: 'waffle', name: 'Ice Cream Cone Bubble', price: '₹249' },
+    { category: 'waffle', name: 'Extra Toppings (Strawberries/Banana/Choco Chips/Ice Cream Scoop)', price: '+₹59' },
+
+    { category: 'dessert', name: 'Apricot Delight', price: '₹100 / ₹200' },
+    { category: 'dessert', name: 'Aseed', price: '₹1000/Kg' },
+    { category: 'dessert', name: 'Plain Brownie', price: '₹99' },
+    { category: 'dessert', name: 'Nutella Brownie', price: '₹129' },
+    { category: 'dessert', name: 'Almond Brownie', price: '₹139' },
+    { category: 'dessert', name: 'KitKat Brownie', price: '₹149' },
+    { category: 'dessert', name: '5 Star Brownie', price: '₹149' },
+    { category: 'dessert', name: 'Choco Lava', price: '₹99' },
+
+    { category: 'mocktail', name: 'Blue Lagoon', price: '₹79' },
+    { category: 'mocktail', name: 'Virgin Mojito', price: '₹79' },
+    { category: 'mocktail', name: 'Cranberry Blast', price: '₹79' },
+    { category: 'mocktail', name: 'Strawberry Bliss', price: '₹79' },
+    { category: 'mocktail', name: 'Green Apple Fizz', price: '₹79' },
+    { category: 'mocktail', name: 'Melon Mania', price: '₹79' },
+
+    { category: 'beverage', name: 'Chocolate Milk Shake', price: '₹99' },
+    { category: 'beverage', name: 'Strawberry Milk Shake', price: '₹99' },
+    { category: 'beverage', name: 'Seasonal Fruit Milk Shake', price: '₹129' },
+    { category: 'beverage', name: 'Cold Coffee', price: '₹99' },
+    { category: 'beverage', name: 'Cold Coffee with Ice Cream', price: '₹149' },
+    { category: 'beverage', name: 'Water Bottle', price: '₹10' },
+    { category: 'beverage', name: 'Campa', price: '₹10' },
+
+    { category: 'icecream', name: 'Single Scoop', price: '₹59' },
+    { category: 'icecream', name: 'Double Scoop', price: '₹99' },
+    { category: 'icecream', name: 'Triple Chocolate Sundae', price: '₹199' },
+    { category: 'icecream', name: 'Choco Berry Sundae', price: '₹199' },
+    { category: 'icecream', name: 'Nutty Overload', price: '₹199' }
+];
+
+function photoPath(filename) {
+    return 'photos of menu/' + encodeURIComponent(filename);
+}
+
+const photoMap = {
+    'Mini Beef': 'WhatsApp Image 2026-06-17 at 05.24.27.jpeg',
+    'Classic Beef': 'WhatsApp Image 2026-06-17 at 05.24.37.jpeg',
+    'UFO Beef': 'WhatsApp Image 2026-06-17 at 05.24.25 (2).jpeg',
+    'Signature Beef': 'WhatsApp Image 2026-06-17 at 05.24.25 (1).jpeg',
+    'Double Decker Beef': 'WhatsApp Image 2026-06-17 at 05.25.32.jpeg',
+    'Mini Chicken (Zinger/Classic)': 'WhatsApp Image 2026-06-17 at 05.24.26 (2).jpeg',
+    'Classic Chicken': 'WhatsApp Image 2026-06-17 at 05.24.41 (1).jpeg',
+    'Chicken Zinger': 'WhatsApp Image 2026-06-17 at 05.24.41.jpeg',
+    'UFO Chicken': 'WhatsApp Image 2026-06-17 at 05.24.39.jpeg',
+    'Double Decker Chicken': 'WhatsApp Image 2026-06-17 at 05.24.27 (1).jpeg',
+
+    'Falafel Wrap': 'WhatsApp Image 2026-06-17 at 05.24.26.jpeg',
+    'Falafel Sabbah Wrap': 'WhatsApp Image 2026-06-17 at 05.24.26 (1).jpeg',
+    'Classic Beef Wrap': 'WhatsApp Image 2026-06-17 at 05.25.01.jpeg',
+    'Classic Chicken Wrap': 'WhatsApp Image 2026-06-17 at 05.24.40.jpeg',
+    'Chicken Zinger Wrap': 'WhatsApp Image 2026-06-17 at 05.27.34.jpeg',
+
+    'Peri Peri French Fries': 'WhatsApp Image 2026-06-17 at 05.24.32 (2).jpeg',
+    'Cheese Loaded Fries': 'WhatsApp Image 2026-06-17 at 05.24.43 (2).jpeg',
+    'Chicken Loaded Fries': 'WhatsApp Image 2026-06-17 at 05.24.43.jpeg',
+    'Beef Loaded Fries': 'WhatsApp Image 2026-06-17 at 05.24.43 (1).jpeg',
+
+    'Chicken Popcorn': 'WhatsApp Image 2026-06-17 at 05.24.31.jpeg',
+    'Chicken Cheese Balls': 'WhatsApp Image 2026-06-17 at 05.24.30 (3).jpeg',
+    'Chicken Strips': 'WhatsApp Image 2026-06-17 at 05.24.30 (2).jpeg',
+    'Chicken Nuggets': 'WhatsApp Image 2026-06-17 at 05.24.30 (1).jpeg',
+    'Cheesy Pizza Fingers': 'WhatsApp Image 2026-06-17 at 05.24.30.jpeg',
+    'Cheese & Jalapeño Poppers': 'WhatsApp Image 2026-06-17 at 05.24.29 (3).jpeg',
+    'Cheese Corn Triangles': 'WhatsApp Image 2026-06-17 at 05.24.29 (2).jpeg',
+    'Chilli Garlic Potato Shots': 'WhatsApp Image 2026-06-17 at 05.24.29.jpeg',
+    'Veggie Pizza Pockets': 'WhatsApp Image 2026-06-17 at 05.24.28.jpeg',
+
+    'Popsicle': 'WhatsApp Image 2026-06-17 at 05.25.29.jpeg',
+    'Triple Chocolate Bubble': 'WhatsApp Image 2026-06-17 at 05.24.31 (2).jpeg',
+    'Ice Cream Cone Bubble': 'WhatsApp Image 2026-06-17 at 05.25.02.jpeg',
+
+    'Apricot Delight': 'WhatsApp Image 2026-06-17 at 05.24.22.jpeg',
+    'Aseed': 'WhatsApp Image 2026-06-17 at 05.24.32.jpeg',
+    'Plain Brownie': 'WhatsApp Image 2026-06-17 at 05.24.24 (1).jpeg',
+    'Nutella Brownie': 'WhatsApp Image 2026-06-17 at 05.24.23 (2).jpeg',
+    'Almond Brownie': 'WhatsApp Image 2026-06-17 at 05.24.24.jpeg',
+    'KitKat Brownie': 'WhatsApp Image 2026-06-17 at 05.26.31.jpeg',
+    '5 Star Brownie': 'WhatsApp Image 2026-06-17 at 05.28.02.jpeg',
+
+    'Blue Lagoon': 'WhatsApp Image 2026-06-17 at 05.24.33 (3).jpeg',
+    'Virgin Mojito': 'WhatsApp Image 2026-06-17 at 05.24.33 (2).jpeg',
+    'Cranberry Blast': 'WhatsApp Image 2026-06-17 at 05.24.33 (1).jpeg',
+    'Green Apple Fizz': 'WhatsApp Image 2026-06-17 at 05.24.34.jpeg'
+};
+
+function buildMenu() {
+    const buttonsEl = document.getElementById('menu-buttons');
+    const gridEl = document.getElementById('menu-grid');
+
+    categories.forEach((cat, index) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.id = cat.id;
+        btn.dataset.category = cat.id;
+        btn.textContent = cat.label;
+        btn.onclick = () => {
+            history.replaceState(null, '', '#' + cat.id);
+            filterMenu(cat.id, btn);
+        };
+        if (index === 0) btn.classList.add('active');
+        buttonsEl.appendChild(btn);
+    });
+
+    menuItems.forEach(item => {
+        const photoFile = photoMap[item.name];
+        const photoSrc = photoFile ? photoPath(photoFile) : '';
+        const id = itemId(item.name);
+        const card = document.createElement('div');
+        card.className = `flip-card ${item.category}`;
+        card.dataset.itemId = id;
+        card.innerHTML = `
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <span class="item-qty-badge" hidden>0</span>
+                    <div class="photo-slot">
+                        ${photoSrc ? `<img src="${photoSrc}" alt="${item.name}">` : ''}
+                    </div>
+                    <div class="item-info">
+                        <div class="item-title">${item.name}</div>
+                        <div class="price-row">
+                            <div class="item-price-front">${item.price}</div>
+                            <button type="button" class="add-cart-btn" data-name="${item.name.replace(/"/g, '&quot;')}" data-price="${item.price.replace(/"/g, '&quot;')}">+ Add<span class="card-qty-num" hidden>0</span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <h3>${item.name}</h3>
+                    <div class="price-row">
+                        <div class="price">${item.price}</div>
+                        <button type="button" class="add-cart-btn" data-name="${item.name.replace(/"/g, '&quot;')}" data-price="${item.price.replace(/"/g, '&quot;')}">+ Add<span class="card-qty-num" hidden>0</span></button>
+                    </div>
+                </div>
+            </div>
+        `;
+        const img = card.querySelector('img');
+        if (img) {
+            img.addEventListener('load', () => img.classList.add('loaded'));
+            img.addEventListener('error', () => { img.remove(); });
+            if (img.complete && img.naturalWidth) img.classList.add('loaded');
+        }
+
+        card.querySelector('.photo-slot')?.addEventListener('click', () => {
+            card.classList.toggle('flipped');
+        });
+
+        card.querySelectorAll('.add-cart-btn').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                Cart.add({ name: btn.dataset.name, price: btn.dataset.price });
+                btn.classList.add('added');
+                setTimeout(() => btn.classList.remove('added'), 600);
+            });
+        });
+
+        gridEl.appendChild(card);
+    });
+
+    updateMenuCardQuantities();
+}
+
+function filterMenu(category, buttonElement) {
+    const buttons = document.querySelectorAll('.menu-buttons button');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    buttonElement.classList.add('active');
+
+    document.querySelectorAll('.flip-card').forEach(card => {
+        card.classList.toggle('hidden', !card.classList.contains(category));
+    });
+}
+
+function applyCategoryFromHash() {
+    const hash = location.hash.replace('#', '');
+    const validIds = categories.map(cat => cat.id);
+    const category = validIds.includes(hash) ? hash : 'burger';
+    const button = document.querySelector(`.menu-buttons button[data-category="${category}"]`)
+        || document.querySelector('.menu-buttons button');
+
+    filterMenu(category, button);
+
+    if (hash && validIds.includes(hash)) {
+        document.getElementById('menu-buttons')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+buildMenu();
+applyCategoryFromHash();
+window.addEventListener('hashchange', applyCategoryFromHash);
+</script>
+
+<div id="cart-overlay"></div>
+<aside id="cart-panel">
+    <div class="cart-header">
+        <h2>Your Cart</h2>
+        <button type="button" id="cart-close" aria-label="Close cart">&times;</button>
+    </div>
+    <p id="cart-empty">Your cart is empty. Add items from the menu!</p>
+    <div id="cart-items"></div>
+    <div id="cart-footer" style="display:none">
+        <div class="cart-total-row">
+            <span>Total</span>
+            <span id="cart-total">₹0</span>
+        </div>
+        <p class="cart-catalog-note">Complete your order in our WhatsApp Business catalog.</p>
+        <a id="cart-checkout" href="#" target="_blank" rel="noopener">Order on WhatsApp</a>
+        <button type="button" id="cart-clear">Clear Cart</button>
+    </div>
+</aside>
+
+<footer class="site-footer">
+    <h3>FILFIL Café</h3>
+    <p>Bold Flavors. Fresh Vibes.</p>
+    <div class="footer-contact">
+        <a href="mailto:info@filfilcafe.com">info@filfilcafe.com</a>
+        <a href="https://wa.me/917997866006" target="_blank" rel="noopener">+91 799 786 6006</a>
+    </div>
+    <p>© 2026 FILFIL Café. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
