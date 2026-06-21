@@ -2,7 +2,6 @@
     const burger = document.getElementById('nav-burger');
     const menu = document.getElementById('nav-menu');
     const overlay = document.getElementById('nav-overlay');
-    const closeBtn = document.getElementById('nav-close');
     const cartToggle = document.getElementById('cart-toggle');
 
     if (!burger || !menu) return;
@@ -20,8 +19,6 @@
     setOpen(false);
 
     burger.addEventListener('click', () => setOpen(!menu.classList.contains('open')));
-
-    closeBtn?.addEventListener('click', () => setOpen(false));
 
     overlay?.addEventListener('click', () => setOpen(false));
 
