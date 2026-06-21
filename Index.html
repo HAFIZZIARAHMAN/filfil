@@ -42,24 +42,47 @@ body{
 
 .hero{
     min-height:100vh;
+    min-height:100svh;
     display:flex;
     justify-content:center;
     align-items:center;
     text-align:center;
     position:relative;
-    background:
-    linear-gradient(135deg, rgba(127,29,29,.82), rgba(22,101,52,.82)),
-    url("hero.jpg");
-    background-size:cover;
-    background-position:center;
-    background-attachment:fixed;
+    overflow:hidden;
+    background:#0a0a0a;
+}
+
+.hero-media{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+}
+
+.hero-video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center center;
+    display:block;
+}
+
+.hero-video-mobile{
+    display:block;
+}
+
+.hero-video-desktop{
+    display:none;
 }
 
 .hero::after{
     content:'';
     position:absolute;
     inset:0;
-    background:radial-gradient(circle at center, transparent 30%, rgba(0,0,0,.45) 100%);
+    z-index:1;
+    background:
+        linear-gradient(135deg, rgba(127,29,29,.68), rgba(22,101,52,.68)),
+        radial-gradient(circle at center, transparent 20%, rgba(0,0,0,.55) 100%);
     pointer-events:none;
 }
 
@@ -67,7 +90,7 @@ body{
     max-width:800px;
     padding:20px;
     position:relative;
-    z-index:1;
+    z-index:2;
     animation:fadeUp 1s ease;
 }
 
@@ -500,7 +523,6 @@ section{
 
 .hero{
     min-height:100svh;
-    background-attachment:scroll;
 }
 
 .hero h1{
@@ -541,6 +563,16 @@ section{
 }
 
 }
+
+@media (min-width:901px){
+    .hero-video-mobile{
+        display:none;
+    }
+
+    .hero-video-desktop{
+        display:block;
+    }
+}
 </style>
 </head>
 
@@ -576,6 +608,14 @@ section{
 <div class="nav-overlay" id="nav-overlay"></div>
 
 <section class="hero" id="home">
+    <div class="hero-media" aria-hidden="true">
+        <video class="hero-video hero-video-mobile" autoplay muted loop playsinline preload="auto">
+            <source src="hero-mobile.mp4" type="video/mp4">
+        </video>
+        <video class="hero-video hero-video-desktop" autoplay muted loop playsinline preload="auto">
+            <source src="hero-desktop.mp4" type="video/mp4">
+        </video>
+    </div>
     <div class="hero-content">
         <span class="tagline">Welcome to</span>
         <h1>FILFIL</h1>
@@ -814,6 +854,37 @@ section{
 
 <script src="nav.js"></script>
 <script src="cart.js"></script>
+<script>
+(function () {
+    const videos = document.querySelectorAll('.hero-video');
+    if (!videos.length) return;
+
+    const playVisibleVideos = () => {
+        videos.forEach((video) => {
+            if (getComputedStyle(video).display === 'none') {
+                video.pause();
+                return;
+            }
+            video.play().catch(() => {});
+        });
+    };
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        videos.forEach((video) => {
+            video.pause();
+            video.removeAttribute('autoplay');
+        });
+        return;
+    }
+
+    playVisibleVideos();
+    window.matchMedia('(min-width: 901px)').addEventListener('change', playVisibleVideos);
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) videos.forEach((video) => video.pause());
+        else playVisibleVideos();
+    });
+})();
+</script>
 
 </body>
 </html>
