@@ -25,4 +25,8 @@
     window.addEventListener('resize', () => {
         if (window.innerWidth > 900) setOpen(false);
     });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menu.classList.contains('open')) setOpen(false);
+    });
 })();

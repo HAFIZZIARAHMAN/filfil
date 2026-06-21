@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>FILFIL Café Menu</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
@@ -17,7 +17,9 @@
 
 body {
     min-height: 100vh;
-    padding: 110px 5% 40px;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    padding: max(110px, calc(env(safe-area-inset-top, 0px) + 88px)) max(5%, env(safe-area-inset-right, 0px)) max(40px, env(safe-area-inset-bottom, 0px)) max(5%, env(safe-area-inset-left, 0px));
     color: #fff;
 }
 
@@ -49,6 +51,7 @@ body {
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
+    min-height: 44px;
     background: rgba(56, 239, 125, 0.25);
     border: 1px solid rgba(56, 239, 125, 0.5);
     color: white;
@@ -280,7 +283,7 @@ body {
 /* Responsive fixes */
 @media(max-width: 900px) {
     body {
-        padding: 88px 16px 70px;
+        padding: max(88px, calc(env(safe-area-inset-top, 0px) + 72px)) max(16px, env(safe-area-inset-right, 0px)) max(70px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
     }
 
     .page-header {
@@ -320,7 +323,8 @@ body {
 
     .menu-buttons button {
         flex-shrink: 0;
-        padding: 8px 16px;
+        padding: 10px 16px;
+        min-height: 44px;
         font-size: 13px;
     }
 
@@ -354,9 +358,20 @@ body {
     }
 }
 
+@media (min-width: 601px) and (max-width: 900px) {
+    .menu-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .flip-card {
+        height: 360px;
+    }
+}
+
 @media(max-width: 480px) {
     body {
-        padding: 82px 12px 60px;
+        padding: max(82px, calc(env(safe-area-inset-top, 0px) + 68px)) max(12px, env(safe-area-inset-left, 0px)) max(60px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-right, 0px));
     }
 
     .flip-card {
@@ -365,6 +380,30 @@ body {
 
     .page-header h1 {
         font-size: 1.5rem;
+    }
+
+    .item-info {
+        padding: 14px 16px;
+    }
+
+    .price-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .add-cart-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+@media (hover: none) {
+    .flip-card:hover .photo-slot img.loaded {
+        transform: none;
+    }
+
+    .btn-download:hover {
+        transform: none;
     }
 }
 </style>
@@ -392,9 +431,13 @@ body {
         </div>
     </div>
     <div class="nav-actions">
-        <button type="button" class="cart-toggle-btn" id="cart-toggle">🛒 <span id="cart-count">0</span></button>
-        <a href="menu.pdf" class="nav-pdf-btn" download="menu.pdf"><span>↓ PDF</span></a>
-        <a href="menu.html" class="nav-order-btn"><span>Order</span></a>
+        <button type="button" class="cart-toggle-btn" id="cart-toggle" aria-label="Open cart">
+            <span aria-hidden="true">🛒</span>
+            <span class="cart-label">Cart</span>
+            <span id="cart-count">0</span>
+        </button>
+        <a href="menu.pdf" class="nav-pdf-btn" download="menu.pdf"><span>PDF</span></a>
+        <a href="menu.html" class="nav-order-btn"><span class="nav-btn-text-long">Order Now</span><span class="nav-btn-text-short">Order</span></a>
     </div>
 </nav>
 <div class="nav-overlay" id="nav-overlay"></div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>FILFIL Café | Bold Flavors. Fresh Vibes.</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@ html{
 body{
     color:white;
     overflow-x:hidden;
-    padding-bottom:40px;
+    padding-bottom:max(40px, env(safe-area-inset-bottom, 0px));
 }
 
 .order-btn{
@@ -88,7 +88,8 @@ body{
 
 .hero-content{
     max-width:800px;
-    padding:20px;
+    width:100%;
+    padding:20px max(20px, env(safe-area-inset-right, 0px)) 20px max(20px, env(safe-area-inset-left, 0px));
     position:relative;
     z-index:2;
     animation:fadeUp 1s ease;
@@ -140,6 +141,8 @@ body{
     display:inline-block;
     border-radius:40px;
     font-weight:600;
+    min-height:48px;
+    line-height:1.2;
     transition:transform .3s, box-shadow .3s;
 }
 
@@ -363,6 +366,10 @@ section{
 
 .about img{
     width:100%;
+    max-width:320px;
+    height:auto;
+    display:block;
+    margin:0 auto;
     border-radius:20px;
     border:3px solid transparent;
     background:linear-gradient(#111,#111) padding-box,
@@ -388,14 +395,16 @@ section{
 
 .gallery{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    grid-template-columns:repeat(3,minmax(0,1fr));
     gap:15px;
 }
 
 .gallery img{
     width:100%;
-    height:280px;
+    height:auto;
+    aspect-ratio:1;
     object-fit:cover;
+    display:block;
     border-radius:15px;
     transition:.4s;
     border:2px solid rgba(255,255,255,.08);
@@ -504,7 +513,7 @@ section{
 @media(max-width:900px){
 
 section{
-    padding:40px 5%;
+    padding:40px max(5%, env(safe-area-inset-left, 0px)) 40px max(5%, env(safe-area-inset-right, 0px));
 }
 
 .home-section-inner{
@@ -516,6 +525,23 @@ section{
     margin-bottom:28px;
 }
 
+.categories{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:16px;
+}
+
+.card{
+    padding:28px 16px;
+}
+
+.card span{
+    font-size:2.4rem;
+}
+
+.card h3{
+    font-size:1.25rem;
+}
+
 .about{
     grid-template-columns:1fr;
     gap:28px;
@@ -523,6 +549,7 @@ section{
 
 .hero{
     min-height:100svh;
+    min-height:100dvh;
 }
 
 .hero h1{
@@ -537,20 +564,35 @@ section{
 
 .hero-buttons a{
     display:block;
-    max-width:280px;
+    width:100%;
+    max-width:320px;
     margin:10px auto;
+}
+
+.menu-grid{
+    grid-template-columns:1fr;
 }
 
 .menu-item .img-wrap{
     height:200px;
 }
 
+.gallery{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+}
+
 .gallery img{
-    height:200px;
+    aspect-ratio:1;
+    border-radius:12px;
 }
 
 .contact-box{
     padding:24px 16px;
+}
+
+.contact-box p{
+    word-break:break-word;
 }
 
 .review-grid{
@@ -560,8 +602,15 @@ section{
 .detailed-menu-btn{
     width:100%;
     max-width:320px;
+    min-height:48px;
 }
 
+}
+
+@media (min-width:601px) and (max-width:900px){
+    .menu-grid{
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+    }
 }
 
 @media (min-width:901px){
@@ -571,6 +620,71 @@ section{
 
     .hero-video-desktop{
         display:block;
+    }
+}
+
+@media(max-width:480px){
+    section{
+        padding:32px max(4%, env(safe-area-inset-left, 0px)) 32px max(4%, env(safe-area-inset-right, 0px));
+    }
+
+    .home-section-inner{
+        padding:22px 14px;
+    }
+
+    .section-title{
+        font-size:1.7rem;
+    }
+
+    .categories{
+        grid-template-columns:1fr;
+    }
+
+    .card span{
+        font-size:2rem;
+    }
+
+    .gallery{
+        gap:8px;
+    }
+
+    .gallery img{
+        aspect-ratio:4/3;
+        border-radius:10px;
+    }
+
+    .hero .tagline{
+        font-size:0.8rem;
+        padding:6px 14px;
+    }
+
+    .hero-buttons{
+        margin-top:28px;
+    }
+
+    .hero-buttons a{
+        max-width:none;
+        padding:14px 24px;
+    }
+
+    .review{
+        padding:24px 20px;
+    }
+
+    .order-btn{
+        width:100%;
+        text-align:center;
+        min-height:48px;
+    }
+}
+
+@media (hover:none){
+    .card:hover,
+    .menu-item:hover,
+    .review:hover,
+    .hero-buttons a:hover{
+        transform:none;
+        box-shadow:none;
     }
 }
 </style>
@@ -601,8 +715,12 @@ section{
         </div>
     </div>
     <div class="nav-actions">
-        <button type="button" class="cart-toggle-btn" id="cart-toggle">🛒 <span id="cart-count">0</span></button>
-        <a href="menu.html" class="nav-order-btn"><span>Order Now</span></a>
+        <button type="button" class="cart-toggle-btn" id="cart-toggle" aria-label="Open cart">
+            <span aria-hidden="true">🛒</span>
+            <span class="cart-label">Cart</span>
+            <span id="cart-count">0</span>
+        </button>
+        <a href="menu.html" class="nav-order-btn"><span class="nav-btn-text-long">Order Now</span><span class="nav-btn-text-short">Order</span></a>
     </div>
 </nav>
 <div class="nav-overlay" id="nav-overlay"></div>
@@ -734,7 +852,7 @@ section{
         <div class="home-section-inner">
             <div class="about">
 
-                <img src="logo.jpeg" alt="FILFIL Café" width="250" height="450">
+                <img src="logo.jpeg" alt="FILFIL Café">
 
                 <div>
                     <h2>About FILFIL</h2>
