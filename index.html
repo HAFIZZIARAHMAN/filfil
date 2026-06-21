@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>FILFIL Café | Bold Flavors. Fresh Vibes.</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    color:white;
+    overflow-x:hidden;
+    padding-bottom:max(40px, env(safe-area-inset-bottom, 0px));
+}
+
+.order-btn{
+    padding:12px 24px;
+    border:none;
+    border-radius:30px;
+    background:linear-gradient(135deg,#dc2626,#16a34a);
+    color:white;
+    cursor:pointer;
+    font-weight:600;
+    text-decoration:none;
+    display:inline-block;
+}
+
+/* HERO */
+
+.hero{
+    min-height:100vh;
+    min-height:100svh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    background:#0a0a0a;
+}
+
+.hero-media{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+}
+
+.hero-video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center center;
+    display:block;
+}
+
+.hero-video-mobile{
+    display:block;
+}
+
+.hero-video-desktop{
+    display:none;
+}
+
+.hero::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:
+        linear-gradient(135deg, rgba(127,29,29,.68), rgba(22,101,52,.68)),
+        radial-gradient(circle at center, transparent 20%, rgba(0,0,0,.55) 100%);
+    pointer-events:none;
+}
+
+.hero-content{
+    max-width:800px;
+    width:100%;
+    padding:20px max(20px, env(safe-area-inset-right, 0px)) 20px max(20px, env(safe-area-inset-left, 0px));
+    position:relative;
+    z-index:2;
+    animation:fadeUp 1s ease;
+}
+
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(30px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+.hero h1{
+    font-size:clamp(3.5rem,10vw,5.5rem);
+    font-weight:800;
+    letter-spacing:4px;
+    background:linear-gradient(90deg,#fca5a5,#fef08a,#86efac);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    text-shadow:none;
+}
+
+.hero .tagline{
+    display:inline-block;
+    margin-top:12px;
+    padding:6px 18px;
+    border-radius:30px;
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.2);
+    font-size:.95rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.hero p{
+    margin-top:24px;
+    font-size:1.2rem;
+    color:#e5e5e5;
+    line-height:1.7;
+}
+
+.hero-buttons{
+    margin-top:40px;
+}
+
+.hero-buttons a{
+    text-decoration:none;
+    padding:15px 32px;
+    margin:10px;
+    display:inline-block;
+    border-radius:40px;
+    font-weight:600;
+    min-height:48px;
+    line-height:1.2;
+    transition:transform .3s, box-shadow .3s;
+}
+
+.hero-buttons a:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.btn-primary{
+    background:linear-gradient(135deg,#dc2626,#16a34a);
+    color:white;
+}
+
+.btn-secondary{
+    border:2px solid rgba(255,255,255,.8);
+    color:white;
+    backdrop-filter:blur(6px);
+}
+
+/* SECTIONS */
+
+section{
+    padding:50px 8%;
+}
+
+.home-section-box{
+    max-width:1200px;
+    margin:0 auto;
+    padding:3px;
+    border-radius:28px;
+    background:linear-gradient(135deg,#dc2626,#ca8a04,#16a34a);
+    box-shadow:0 12px 40px rgba(0,0,0,0.35);
+}
+
+.home-section-inner{
+    background:linear-gradient(145deg,rgba(69,10,10,0.92) 0%,rgba(20,83,45,0.92) 100%);
+    border-radius:25px;
+    padding:48px 36px;
+}
+
+.section-title{
+    text-align:center;
+    font-size:2.6rem;
+    margin-bottom:40px;
+    font-weight:800;
+    background:linear-gradient(90deg,#fca5a5,#86efac);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+}
+
+.section-title::after{
+    content:'';
+    display:block;
+    width:120px;
+    height:4px;
+    margin:14px auto 0;
+    border-radius:2px;
+    background:linear-gradient(90deg,#dc2626,#16a34a);
+}
+
+/* CATEGORIES */
+
+.categories{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:rgba(0,0,0,.3);
+    border:1px solid rgba(255,255,255,.12);
+    padding:36px 24px;
+    text-align:center;
+    border-radius:20px;
+    transition:.4s;
+    backdrop-filter:blur(8px);
+    position:relative;
+    overflow:hidden;
+    text-decoration:none;
+    color:inherit;
+    display:block;
+    cursor:pointer;
+}
+
+.card::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;right:0;
+    height:4px;
+    background:linear-gradient(90deg,#dc2626,#16a34a);
+    transform:scaleX(0);
+    transition:transform .4s;
+}
+
+.card:hover::before{
+    transform:scaleX(1);
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 16px 35px rgba(220,38,38,.25);
+    border-color:rgba(134,239,172,.35);
+}
+
+.card h3{
+    font-size:1.6rem;
+    margin-bottom:10px;
+    color:#fff;
+}
+
+.card p{
+    color:#ccc;
+    font-size:.95rem;
+}
+
+.card span{
+    font-size:3rem;
+    display:block;
+    margin-bottom:12px;
+    filter:drop-shadow(0 4px 8px rgba(0,0,0,.3));
+}
+
+/* Best Sellers */
+
+.menu-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:28px;
+}
+
+.menu-item{
+    background:rgba(0,0,0,.4);
+    border-radius:22px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.1);
+    transition:transform .4s, box-shadow .4s;
+    position:relative;
+}
+
+.menu-item:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(0,0,0,.4);
+    border-color:rgba(134,239,172,.3);
+}
+
+.menu-item .img-wrap{
+    position:relative;
+    height:240px;
+    overflow:hidden;
+}
+
+.menu-item .img-wrap::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,.7) 0%, transparent 50%);
+    pointer-events:none;
+}
+
+.menu-item img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform .5s ease;
+}
+
+.menu-item:hover img{
+    transform:scale(1.08);
+}
+
+.menu-badge{
+    position:absolute;
+    top:14px;
+    left:14px;
+    z-index:2;
+    padding:6px 14px;
+    border-radius:20px;
+    background:linear-gradient(135deg,#dc2626,#16a34a);
+    font-size:.75rem;
+    font-weight:700;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+}
+
+.menu-content{
+    padding:22px;
+}
+
+.menu-content h3{
+    font-size:1.25rem;
+    margin-bottom:8px;
+    line-height:1.3;
+}
+
+.menu-content p{
+    color:#bbb;
+    font-size:.9rem;
+    line-height:1.5;
+}
+
+.price{
+    display:inline-block;
+    margin-top:12px;
+    padding:6px 16px;
+    border-radius:20px;
+    background:linear-gradient(135deg,rgba(220,38,38,.25),rgba(22,163,74,.25));
+    color:#86efac;
+    font-weight:700;
+    font-size:1.15rem;
+}
+
+/* ABOUT */
+
+.about{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    align-items:center;
+}
+
+.about img{
+    width:100%;
+    max-width:320px;
+    height:auto;
+    display:block;
+    margin:0 auto;
+    border-radius:20px;
+    border:3px solid transparent;
+    background:linear-gradient(#111,#111) padding-box,
+                linear-gradient(135deg,#dc2626,#16a34a) border-box;
+    box-shadow:0 15px 40px rgba(0,0,0,.4);
+}
+
+.about h2{
+    font-size:2.6rem;
+    margin-bottom:20px;
+    background:linear-gradient(90deg,#fca5a5,#86efac);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+}
+
+.about p{
+    color:#ddd;
+    line-height:1.8;
+}
+
+/* GALLERY */
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:15px;
+}
+
+.gallery img{
+    width:100%;
+    height:auto;
+    aspect-ratio:1;
+    object-fit:cover;
+    display:block;
+    border-radius:15px;
+    transition:.4s;
+    border:2px solid rgba(255,255,255,.08);
+}
+
+.gallery img:hover{
+    transform:scale(1.04);
+    border-color:rgba(134,239,172,.4);
+    box-shadow:0 12px 30px rgba(0,0,0,.4);
+}
+
+/* REVIEWS */
+
+.review-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+}
+
+.review{
+    background:rgba(0,0,0,.35);
+    border:1px solid rgba(255,255,255,.1);
+    padding:30px;
+    border-radius:20px;
+    backdrop-filter:blur(8px);
+    transition:transform .3s;
+    position:relative;
+}
+
+.review::before{
+    content:'"';
+    position:absolute;
+    top:10px;
+    left:18px;
+    font-size:3rem;
+    line-height:1;
+    color:rgba(220,38,38,.4);
+    font-family:Georgia,serif;
+}
+
+.review:hover{
+    transform:translateY(-5px);
+    border-color:rgba(134,239,172,.3);
+}
+
+.review p{
+    margin-top:10px;
+    color:#ddd;
+    font-style:italic;
+    line-height:1.6;
+}
+
+.stars{
+    color:gold;
+    font-size:1.2rem;
+}
+
+/* CONTACT */
+
+.contact{
+    text-align:center;
+}
+
+.contact-box{
+    background:rgba(0,0,0,.25);
+    border:1px solid rgba(255,255,255,.12);
+    padding:40px;
+    border-radius:20px;
+    max-width:700px;
+    margin:auto;
+}
+
+.contact p{
+    margin:15px 0;
+}
+
+/* FOOTER */
+
+.detailed-menu-btn{
+    display:block;
+    margin:44px auto 0;
+    padding:16px 36px;
+    border:none;
+    border-radius:30px;
+    background:linear-gradient(135deg,#dc2626,#16a34a);
+    color:white;
+    font-size:1.05rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:transform .3s, box-shadow .3s;
+    box-shadow:0 8px 25px rgba(220,38,38,.3);
+}
+
+.detailed-menu-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 35px rgba(22,163,74,.35);
+}
+
+.gradient-line{
+    height:5px;
+    background:linear-gradient(90deg,#dc2626,#16a34a);
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+section{
+    padding:40px max(5%, env(safe-area-inset-left, 0px)) 40px max(5%, env(safe-area-inset-right, 0px));
+}
+
+.home-section-inner{
+    padding:28px 18px;
+}
+
+.section-title{
+    font-size:2rem;
+    margin-bottom:28px;
+}
+
+.categories{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:16px;
+}
+
+.card{
+    padding:28px 16px;
+}
+
+.card span{
+    font-size:2.4rem;
+}
+
+.card h3{
+    font-size:1.25rem;
+}
+
+.about{
+    grid-template-columns:1fr;
+    gap:28px;
+}
+
+.hero{
+    min-height:100svh;
+    min-height:100dvh;
+}
+
+.hero h1{
+    font-size:clamp(2.5rem,12vw,3.5rem);
+    letter-spacing:2px;
+}
+
+.hero p{
+    font-size:1rem;
+    padding:0 8px;
+}
+
+.hero-buttons a{
+    display:block;
+    width:100%;
+    max-width:320px;
+    margin:10px auto;
+}
+
+.menu-grid{
+    grid-template-columns:1fr;
+}
+
+.menu-item .img-wrap{
+    height:200px;
+}
+
+.gallery{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+}
+
+.gallery img{
+    aspect-ratio:1;
+    border-radius:12px;
+}
+
+.contact-box{
+    padding:24px 16px;
+}
+
+.contact-box p{
+    word-break:break-word;
+}
+
+.review-grid{
+    grid-template-columns:1fr;
+}
+
+.detailed-menu-btn{
+    width:100%;
+    max-width:320px;
+    min-height:48px;
+}
+
+}
+
+@media (min-width:601px) and (max-width:900px){
+    .menu-grid{
+        grid-template-columns:repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width:901px){
+    .hero-video-mobile{
+        display:none;
+    }
+
+    .hero-video-desktop{
+        display:block;
+    }
+}
+
+@media(max-width:480px){
+    section{
+        padding:32px max(4%, env(safe-area-inset-left, 0px)) 32px max(4%, env(safe-area-inset-right, 0px));
+    }
+
+    .home-section-inner{
+        padding:22px 14px;
+    }
+
+    .section-title{
+        font-size:1.7rem;
+    }
+
+    .categories{
+        grid-template-columns:1fr;
+    }
+
+    .card span{
+        font-size:2rem;
+    }
+
+    .gallery{
+        gap:8px;
+    }
+
+    .gallery img{
+        aspect-ratio:4/3;
+        border-radius:10px;
+    }
+
+    .hero .tagline{
+        font-size:0.8rem;
+        padding:6px 14px;
+    }
+
+    .hero-buttons{
+        margin-top:28px;
+    }
+
+    .hero-buttons a{
+        max-width:none;
+        padding:14px 24px;
+    }
+
+    .review{
+        padding:24px 20px;
+    }
+
+    .order-btn{
+        width:100%;
+        text-align:center;
+        min-height:48px;
+    }
+}
+
+@media (hover:none){
+    .card:hover,
+    .menu-item:hover,
+    .review:hover,
+    .hero-buttons a:hover{
+        transform:none;
+        box-shadow:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="site-nav">
+    <a href="Index.html#home" class="logo-link"><img src="logo.jpeg" alt="FILFIL Café"></a>
+    <button type="button" class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="nav-menu" id="nav-menu">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#menu">Best Sellers</a></li>
+            <li><a href="menu.html">Full Menu</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-contact">
+            <a href="mailto:info@filfilcafe.com">📧 info@filfilcafe.com</a>
+            <a href="https://wa.me/917997866006" target="_blank" rel="noopener">📞 +91 799 786 6006</a>
+        </div>
+    </div>
+    <div class="nav-actions">
+        <button type="button" class="cart-toggle-btn" id="cart-toggle" aria-label="Open cart">
+            <span aria-hidden="true">🛒</span>
+            <span class="cart-label">Cart</span>
+            <span id="cart-count">0</span>
+        </button>
+        <a href="menu.html" class="nav-order-btn"><span class="nav-btn-text-long">Order Now</span><span class="nav-btn-text-short">Order</span></a>
+    </div>
+</nav>
+<div class="nav-overlay" id="nav-overlay"></div>
+
+<section class="hero" id="home">
+    <div class="hero-media" aria-hidden="true">
+        <video class="hero-video hero-video-mobile" autoplay muted loop playsinline preload="auto">
+            <source src="hero-mobile.mp4" type="video/mp4">
+        </video>
+        <video class="hero-video hero-video-desktop" autoplay muted loop playsinline preload="auto">
+            <source src="hero-desktop.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="hero-content"> 
+        <span class="tagline">Welcome to</span>
+        <h1>FILFIL</h1>
+
+        <p>
+            Bold Flavors. Fresh Vibes.<br>
+            Juicy Burgers • Loaded Wraps • Refreshing Mocktails • Sweet Waffles
+        </p>
+
+        <div class="hero-buttons">
+            <a href="menu.html" class="btn-primary">View Menu</a>
+            <a href="https://wa.me/917997866006?text=Hello%20FILFIL%20Caf%C3%A9!%20I%20would%20like%20to%20place%20an%20order." class="btn-secondary" target="_blank" rel="noopener">Order on WhatsApp</a>
+        </div>
+    </div>
+</section>
+
+<section id="specialties">
+    <div class="home-section-box">
+        <div class="home-section-inner">
+            <h2 class="section-title">Our Specialties</h2>
+
+            <div class="categories">
+
+                <a href="menu.html#burger" class="card">
+                    <span>🍔</span>
+                    <h3>Burgers</h3>
+                    <p>Juicy grilled perfection.</p>
+                </a>
+
+                <a href="menu.html#wrap" class="card">
+                    <span>🌯</span>
+                    <h3>Wraps</h3>
+                    <p>Fresh and flavorful.</p>
+                </a>
+
+                <a href="menu.html#mocktail" class="card">
+                    <span>🍹</span>
+                    <h3>Mocktails</h3>
+                    <p>Cool and refreshing.</p>
+                </a>
+
+                <a href="menu.html#waffle" class="card">
+                    <span>🧇</span>
+                    <h3>Waffles</h3>
+                    <p>Sweet happiness.</p>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="menu">
+    <div class="home-section-box">
+        <div class="home-section-inner">
+            <h2 class="section-title">Best Sellers</h2>
+
+            <div class="menu-grid">
+
+                <div class="menu-item">
+                    <div class="img-wrap">
+                        <span class="menu-badge">Best Seller</span>
+                        <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.25 (1).jpeg" alt="Signature Beef Burger">
+                    </div>
+                    <div class="menu-content">
+                        <h3>Signature Beef Burger</h3>
+                        <p>Premium beef loaded with our signature sauces and fresh veggies.</p>
+                        <div class="price">₹199</div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="img-wrap">
+                        <span class="menu-badge">Popular</span>
+                        <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.27.34.jpeg" alt="Chicken Zinger Wrap">
+                    </div>
+                    <div class="menu-content">
+                        <h3>Chicken Zinger Wrap</h3>
+                        <p>Crispy chicken strips with fresh lettuce and creamy sauce.</p>
+                        <div class="price">₹139</div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="img-wrap">
+                        <span class="menu-badge">Refreshing</span>
+                        <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.33 (3).jpeg" alt="Blue Lagoon Mocktail">
+                    </div>
+                    <div class="menu-content">
+                        <h3>Blue Lagoon Mocktail</h3>
+                        <p>Cool blue citrus fizz — the perfect refreshment.</p>
+                        <div class="price">₹79</div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="img-wrap">
+                        <span class="menu-badge">Must Try</span>
+                        <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.25.02.jpeg" alt="Triple Chocolate Bubble Waffle">
+                    </div>
+                    <div class="menu-content">
+                        <h3>Triple Chocolate Bubble Waffle</h3>
+                        <p>Warm bubble waffle with ice cream and chocolate drizzle.</p>
+                        <div class="price">₹199</div>
+                    </div>
+                </div>
+
+            </div>
+            <button class="detailed-menu-btn" onclick="window.location.href='menu.html'">View Detailed Menu</button>
+        </div>
+    </div>
+</section>
+
+<section id="about">
+    <div class="home-section-box">
+        <div class="home-section-inner">
+            <div class="about">
+
+                <img src="logo.jpeg" alt="FILFIL Café">
+
+                <div>
+                    <h2>About FILFIL</h2>
+
+                    <p>
+                        At FILFIL Café, we bring together juicy burgers,
+                        flavorful wraps, handcrafted mocktails and delicious
+                        waffles in a vibrant atmosphere. Every dish is made
+                        fresh to deliver unforgettable taste and quality.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="gallery">
+    <div class="home-section-box">
+        <div class="home-section-inner">
+            <h2 class="section-title">Gallery</h2>
+
+            <div class="gallery">
+                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.25.32.jpeg" alt="Double Decker Beef Burger">
+                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.43 (2).jpeg" alt="Cheese Loaded Fries">
+                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.40.jpeg" alt="Chicken Wrap">
+                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.33 (2).jpeg" alt="Virgin Mojito">
+                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.26.31.jpeg" alt="KitKat Brownie">
+                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.31 (2).jpeg" alt="Triple Chocolate Bubble">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="reviews">
+    <div class="home-section-box">
+        <div class="home-section-inner">
+            <h2 class="section-title">Customer Reviews</h2>
+
+            <div class="review-grid">
+
+                <div class="review">
+                    <div class="stars">★★★★★</div>
+                    <p>"Best burger I've had in a long time!"</p>
+                </div>
+
+                <div class="review">
+                    <div class="stars">★★★★★</div>
+                    <p>"Amazing wraps and refreshing mocktails."</p>
+                </div>
+
+                <div class="review">
+                    <div class="stars">★★★★★</div>
+                    <p>"The waffles are absolutely incredible."</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="home-section-box">
+        <div class="home-section-inner">
+            <h2 class="section-title">Contact Us</h2>
+
+            <div class="contact-box">
+
+                <p>📍 Bazar Ghat, New Mallepally, Hyderabad, Telangana 500001</p>
+
+                <p>📞 <a href="tel:+917997866006" style="color:#86efac;text-decoration:none;">+91 799 786 6006</a></p>
+
+                <p>📧 <a href="mailto:info@filfilcafe.com" style="color:#86efac;text-decoration:none;">info@filfilcafe.com</a></p>
+
+                <p>🕒 Mon - Sun: 10:00 AM - 11:00 PM</p>
+
+                <a class="order-btn" href="https://wa.me/917997866006?text=Hello%20FILFIL%20Caf%C3%A9!%20I%20would%20like%20to%20place%20an%20order." target="_blank" rel="noopener">
+                    Order on WhatsApp
+                </a>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="gradient-line"></div>
+
+<footer class="site-footer">
+    <h3>FILFIL</h3>
+    <p>Bold Flavors. Fresh Vibes.</p>
+    <div class="footer-contact">
+        <a href="mailto:info@filfilcafe.com">info@filfilcafe.com</a>
+        <a href="https://wa.me/917997866006" target="_blank" rel="noopener">+91 799 786 6006</a>
+    </div>
+    <br>
+    <p>© 2026 FILFIL Café. All Rights Reserved.</p>
+</footer>
+
+<div id="cart-overlay"></div>
+<aside id="cart-panel">
+    <div class="cart-header">
+        <h2>Your Cart</h2>
+        <button type="button" id="cart-close" aria-label="Close cart">&times;</button>
+    </div>
+    <p id="cart-empty">Your cart is empty. <a href="menu.html" style="color:#22c55e;">Browse the menu</a> to add items!</p>
+    <div id="cart-items"></div>
+    <div id="cart-footer" style="display:none">
+        <div class="cart-total-row">
+            <span>Total</span>
+            <span id="cart-total">₹0</span>
+        </div>
+        <p class="cart-catalog-note">Tap below to send your order as a WhatsApp message.</p>
+        <a id="cart-checkout" href="#" target="_blank" rel="noopener">Order on WhatsApp</a>
+        <button type="button" id="cart-clear">Clear Cart</button>
+    </div>
+</aside>
+
+<script src="nav.js"></script>
+<script src="cart.js"></script>
+<script>
+(function () {
+    const videos = document.querySelectorAll('.hero-video');
+    if (!videos.length) return;
+
+    const playVisibleVideos = () => {
+        videos.forEach((video) => {
+            if (getComputedStyle(video).display === 'none') {
+                video.pause();
+                return;
+            }
+            video.play().catch(() => {});
+        });
+    };
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        videos.forEach((video) => {
+            video.pause();
+            video.removeAttribute('autoplay');
+        });
+        return;
+    }
+
+    playVisibleVideos();
+    window.matchMedia('(min-width: 901px)').addEventListener('change', playVisibleVideos);
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) videos.forEach((video) => video.pause());
+        else playVisibleVideos();
+    });
+})();
+</script>
+
+</body>
+</html>
