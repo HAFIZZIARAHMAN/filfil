@@ -413,16 +413,25 @@ body {
 <nav class="site-nav">
     <a href="Index.html" class="logo-link"><img src="logo.jpeg" alt="FILFIL Café"></a>
     <button type="button" class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span class="nav-burger-lines" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+        <span class="nav-burger-label">Menu</span>
     </button>
-    <div class="nav-menu" id="nav-menu">
+    <div class="nav-menu" id="nav-menu" aria-hidden="true">
+        <div class="nav-drawer-head">
+            <span class="nav-drawer-title">Menu</span>
+            <button type="button" class="nav-drawer-close" id="nav-close" aria-label="Close menu">&times;</button>
+        </div>
         <ul>
             <li><a href="Index.html#home">Home</a></li>
             <li><a href="Index.html#menu">Best Sellers</a></li>
             <li><a href="menu.html" class="active">Full Menu</a></li>
             <li><a href="Index.html#about">About</a></li>
+            <li><a href="Index.html#gallery">Gallery</a></li>
+            <li><a href="Index.html#reviews">Reviews</a></li>
             <li><a href="Index.html#contact">Contact</a></li>
         </ul>
         <div class="nav-contact">

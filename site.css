@@ -71,12 +71,11 @@ textarea {
 
 .nav-burger {
     display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    width: 44px;
+    align-items: center;
+    gap: 6px;
+    min-width: 44px;
     height: 44px;
-    padding: 10px;
+    padding: 8px 10px;
     border: none;
     border-radius: 10px;
     background: rgba(255, 255, 255, 0.1);
@@ -85,26 +84,45 @@ textarea {
     z-index: 1002;
 }
 
-.nav-burger span {
+.nav-burger-lines {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 22px;
+}
+
+.nav-burger-label {
+    display: none;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1;
+}
+
+.nav-burger-lines span {
     display: block;
     width: 22px;
     height: 2.5px;
-    margin: 0 auto;
     border-radius: 2px;
     background: #fff;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.nav-burger.open span:nth-child(1) {
+.nav-burger.open .nav-burger-lines span:nth-child(1) {
     transform: translateY(7.5px) rotate(45deg);
 }
 
-.nav-burger.open span:nth-child(2) {
+.nav-burger.open .nav-burger-lines span:nth-child(2) {
     opacity: 0;
 }
 
-.nav-burger.open span:nth-child(3) {
+.nav-burger.open .nav-burger-lines span:nth-child(3) {
     transform: translateY(-7.5px) rotate(-45deg);
+}
+
+.nav-drawer-head {
+    display: none;
 }
 
 .nav-overlay {
@@ -562,13 +580,54 @@ body.nav-open {
         order: 3;
     }
 
+    .nav-burger-label {
+        display: inline;
+    }
+
     .nav-actions {
         order: 2;
         margin-left: auto;
+        flex-shrink: 1;
+        min-width: 0;
     }
 
     .logo-link {
         order: 1;
+        flex-shrink: 0;
+    }
+
+    .nav-drawer-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 4px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .nav-drawer-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #86efac;
+    }
+
+    .nav-drawer-close {
+        width: 44px;
+        height: 44px;
+        border: none;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+        font-size: 1.35rem;
+        line-height: 1;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
     }
 
     .nav-menu {
@@ -577,22 +636,28 @@ body.nav-open {
         right: 0;
         width: min(300px, 85vw);
         height: 100%;
+        height: 100dvh;
         flex: none;
         flex-direction: column;
         align-items: stretch;
         justify-content: flex-start;
         gap: 0;
-        padding: 80px 24px 32px;
+        padding: max(72px, calc(env(safe-area-inset-top, 0px) + 56px)) max(24px, env(safe-area-inset-right, 0px)) max(32px, env(safe-area-inset-bottom, 0px)) 24px;
         background: linear-gradient(180deg, #450a0a 0%, #14532d 100%);
         box-shadow: -8px 0 30px rgba(0, 0, 0, 0.4);
         transform: translateX(100%);
-        transition: transform 0.35s ease;
+        transition: transform 0.35s ease, visibility 0.35s ease;
         z-index: 1001;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        visibility: hidden;
+        pointer-events: none;
     }
 
     .nav-menu.open {
         transform: translateX(0);
+        visibility: visible;
+        pointer-events: auto;
     }
 
     .site-nav ul {
@@ -607,8 +672,15 @@ body.nav-open {
 
     .site-nav ul a {
         display: block;
-        padding: 16px 4px;
+        padding: 16px 8px;
         font-size: 1rem;
+        color: #fff;
+        -webkit-text-fill-color: #fff;
+    }
+
+    .site-nav ul a.active {
+        color: #86efac;
+        -webkit-text-fill-color: #86efac;
     }
 
     .nav-contact {
@@ -625,11 +697,15 @@ body.nav-open {
         font-size: 0.9rem;
         white-space: normal;
         word-break: break-word;
+        color: #fff;
+        display: block;
+        padding: 8px 0;
     }
 
     .site-nav {
-        padding: 8px 16px;
+        padding: 8px max(12px, env(safe-area-inset-right, 0px)) 8px max(12px, env(safe-area-inset-left, 0px));
         flex-wrap: nowrap;
+        overflow: visible;
     }
 
     .site-nav .logo-link img {
@@ -717,8 +793,12 @@ body.nav-open {
 
     .nav-menu {
         width: min(320px, 100vw);
-        padding-top: max(80px, calc(env(safe-area-inset-top, 0px) + 64px));
+        padding-top: max(68px, calc(env(safe-area-inset-top, 0px) + 52px));
         padding-bottom: max(32px, env(safe-area-inset-bottom, 0px));
+    }
+
+    .nav-burger-label {
+        display: none;
     }
 
     .cart-item {
