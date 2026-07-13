@@ -198,9 +198,9 @@ body::before{
     inset:0;
     z-index:1;
     background:
-        linear-gradient(135deg, rgba(198,40,40,.32) 0%, transparent 45%, rgba(46,125,50,.34) 100%),
-        radial-gradient(circle at 50% 42%, transparent 4%, rgba(0,0,0,.68) 100%),
-        linear-gradient(180deg, rgba(0,0,0,.4), rgba(0,0,0,.12) 42%, rgba(0,0,0,.6));
+        linear-gradient(135deg, rgba(198,40,40,.07) 0%, transparent 55%, rgba(46,125,50,.08) 100%),
+        radial-gradient(circle at 50% 42%, transparent 45%, rgba(0,0,0,.2) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,0) 50%, rgba(0,0,0,.22));
     pointer-events:none;
 }
 
@@ -352,6 +352,42 @@ body::before{
     animation:cueDot 2.6s ease-in-out infinite;
 }
 
+.scroll-cue .swipe{
+    display:none;
+    width:30px;
+    height:42px;
+}
+
+.scroll-cue .swipe svg{
+    width:100%;
+    height:100%;
+    display:block;
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,.35));
+}
+
+.scroll-cue .swipe-hand{
+    animation:cueHand 2.2s ease-in-out infinite;
+}
+
+.scroll-cue .swipe-arc{
+    opacity:0;
+    animation:cueArc 2.2s ease-in-out infinite;
+}
+
+.scroll-cue .swipe-arc-2{
+    animation-delay:.18s;
+}
+
+@keyframes cueHand{
+    0%,100%{transform:translate(2px,15px);}
+    45%{transform:translate(2px,9px);}
+}
+
+@keyframes cueArc{
+    0%,55%,100%{opacity:0;}
+    30%{opacity:.9;}
+}
+
 @keyframes cueFloat{
     0%,100%{transform:translateX(-50%) translateY(0);}
     50%{transform:translateX(-50%) translateY(6px);}
@@ -364,8 +400,14 @@ body::before{
 
 @media (prefers-reduced-motion: reduce){
     .scroll-cue,
-    .scroll-cue .mouse i{
+    .scroll-cue .mouse i,
+    .scroll-cue .swipe-hand,
+    .scroll-cue .swipe-arc{
         animation:none;
+    }
+
+    .scroll-cue .swipe-arc{
+        opacity:.8;
     }
 }
 
@@ -1286,7 +1328,17 @@ section{
     }
 
     .scroll-cue{
+        bottom:16px;
+        font-size:.6rem;
+        gap:6px;
+    }
+
+    .scroll-cue .mouse{
         display:none;
+    }
+
+    .scroll-cue .swipe{
+        display:block;
     }
 
     .hero .tagline{
@@ -1400,6 +1452,15 @@ section{
     </div>
     <a href="#specialties" class="scroll-cue" aria-label="Scroll to explore the menu">
         <span class="mouse" aria-hidden="true"><i></i></span>
+        <span class="swipe" aria-hidden="true">
+            <svg viewBox="0 0 28 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="swipe-arc swipe-arc-1" d="M8 9 Q14 3 20 9" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round"/>
+                <path class="swipe-arc swipe-arc-2" d="M5.5 13 Q14 4 22.5 13" stroke="var(--gold)" stroke-width="1.6" stroke-linecap="round"/>
+                <g class="swipe-hand" transform="translate(2 15)">
+                    <path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zM18.84 15.87l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.44-.72c-.37-.08-.76.04-1.03.31l-1.06 1.06 5.09 5.09c.28.28.66.44 1.06.44h6.79c.75 0 1.38-.55 1.49-1.29l.76-5.32c.09-.63-.23-1.25-.79-1.53z" fill="#fff"/>
+                </g>
+            </svg>
+        </span>
         <span>Explore</span>
     </a>
 </section>
