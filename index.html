@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>FILFIL Café | Bold Flavors. Fresh Vibes.</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
 
 <style>
@@ -13,7 +15,11 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+    font-family:'Inter','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family:'Poppins','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
 }
 
 html{
@@ -21,21 +27,132 @@ html{
 }
 
 body{
-    color:white;
+    color:var(--text);
+    background:#FAEBD7;
     overflow-x:hidden;
     padding-bottom:max(40px, env(safe-area-inset-bottom, 0px));
 }
 
+/* Soft ambient depth behind the page content */
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    background:
+        radial-gradient(1200px 620px at 8% -6%, rgba(212,175,55,.07), transparent 60%),
+        radial-gradient(1000px 520px at 100% 2%, rgba(46,125,50,.05), transparent 55%),
+        radial-gradient(900px 500px at 50% 108%, rgba(198,40,40,.04), transparent 60%);
+}
+
+/* Premium tactile buttons: shine sweep on hover */
+.btn-primary,
+.btn-secondary,
+.order-btn,
+.detailed-menu-btn{
+    position:relative;
+    overflow:hidden;
+    isolation:isolate;
+}
+
+.btn-primary::after,
+.btn-secondary::after,
+.order-btn::after,
+.detailed-menu-btn::after{
+    content:'';
+    position:absolute;
+    top:0;
+    left:-125%;
+    width:55%;
+    height:100%;
+    background:linear-gradient(100deg, transparent, rgba(255,255,255,.38), transparent);
+    transform:skewX(-18deg);
+    transition:left .6s cubic-bezier(.22,1,.36,1);
+    pointer-events:none;
+    z-index:1;
+}
+
+.btn-primary:hover::after,
+.btn-secondary:hover::after,
+.order-btn:hover::after,
+.detailed-menu-btn:hover::after{
+    left:135%;
+}
+
+@media (prefers-reduced-motion: reduce){
+    .btn-primary::after,
+    .btn-secondary::after,
+    .order-btn::after,
+    .detailed-menu-btn::after{
+        display:none;
+    }
+}
+
 .order-btn{
-    padding:12px 24px;
+    padding:15px 32px;
     border:none;
     border-radius:30px;
-    background:linear-gradient(135deg,#dc2626,#16a34a);
-    color:white;
+    background:var(--btn-green);
+    color:#fff;
     cursor:pointer;
     font-weight:600;
+    letter-spacing:.5px;
     text-decoration:none;
     display:inline-block;
+    box-shadow:0 10px 26px rgba(46,125,50,.35);
+    transition:background .35s, transform .35s, box-shadow .35s;
+}
+
+.order-btn:hover{
+    background:var(--btn-green-hover);
+    transform:translateY(-3px) scale(1.03);
+    box-shadow:var(--glow-green);
+}
+
+/* Delivery partner buttons */
+.delivery-btns{
+    display:flex;
+    flex-wrap:nowrap;
+    align-items:center;
+    gap:14px;
+    margin-top:18px;
+}
+
+.delivery-btn{
+    flex:1 1 0;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:13px 16px;
+    border-radius:30px;
+    color:#fff;
+    font-weight:700;
+    letter-spacing:.3px;
+    text-decoration:none;
+    white-space:nowrap;
+    transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s, filter .35s;
+}
+
+.btn-whatsapp{
+    background:var(--btn-green);
+    box-shadow:0 10px 26px rgba(46,125,50,.4);
+}
+
+.delivery-btn:hover{
+    transform:translateY(-3px) scale(1.03);
+    filter:brightness(1.05);
+}
+
+.btn-swiggy{
+    background:#fc8019;
+    box-shadow:0 10px 26px rgba(252,128,25,.4);
+}
+
+.btn-zomato{
+    background:#e23744;
+    box-shadow:0 10px 26px rgba(226,55,68,.4);
 }
 
 /* HERO */
@@ -81,8 +198,9 @@ body{
     inset:0;
     z-index:1;
     background:
-        linear-gradient(135deg, rgba(127,29,29,.68), rgba(22,101,52,.68)),
-        radial-gradient(circle at center, transparent 20%, rgba(0,0,0,.55) 100%);
+        linear-gradient(135deg, rgba(198,40,40,.32) 0%, transparent 45%, rgba(46,125,50,.34) 100%),
+        radial-gradient(circle at 50% 42%, transparent 4%, rgba(0,0,0,.68) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.4), rgba(0,0,0,.12) 42%, rgba(0,0,0,.6));
     pointer-events:none;
 }
 
@@ -101,33 +219,55 @@ body{
 }
 
 .hero h1{
-    font-size:clamp(3.5rem,10vw,5.5rem);
-    font-weight:800;
-    letter-spacing:4px;
-    background:linear-gradient(90deg,#fca5a5,#fef08a,#86efac);
+    font-family:var(--font-display);
+    font-size:clamp(3.8rem,11vw,6.4rem);
+    font-weight:700;
+    letter-spacing:6px;
+    line-height:1.05;
+    margin-top:26px;
+    color:#fff;
+    background:linear-gradient(100deg,#ffffff 30%,#f6e8c4 60%,var(--gold));
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
     background-clip:text;
-    text-shadow:none;
+    filter:drop-shadow(0 8px 30px rgba(0,0,0,.5));
+}
+
+.hero h2{
+    font-family:var(--font-display);
+    font-size:clamp(2rem,7vw,5rem);
+    font-weight:700;
+    letter-spacing:6px;
+    line-height:1.05;
+    margin-top:6px;
+    color:#FFD400;
+    -webkit-text-fill-color:#FFD400;
+    text-shadow:0 6px 24px rgba(0,0,0,.45);
+    filter:drop-shadow(0 8px 30px rgba(0,0,0,.4));
 }
 
 .hero .tagline{
     display:inline-block;
     margin-top:12px;
-    padding:6px 18px;
+    padding:8px 22px;
     border-radius:30px;
-    background:rgba(255,255,255,.1);
-    border:1px solid rgba(255,255,255,.2);
-    font-size:.95rem;
-    letter-spacing:1px;
+    background:rgba(212,175,55,.14);
+    border:1px solid rgba(212,175,55,.5);
+    color:var(--gold);
+    font-size:.9rem;
+    font-weight:600;
+    letter-spacing:3px;
     text-transform:uppercase;
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
 }
 
 .hero p{
     margin-top:24px;
     font-size:1.2rem;
-    color:#e5e5e5;
+    color:#f0eee9;
     line-height:1.7;
+    text-shadow:0 2px 10px rgba(0,0,0,.4);
 }
 
 .hero-buttons{
@@ -136,72 +276,198 @@ body{
 
 .hero-buttons a{
     text-decoration:none;
-    padding:15px 32px;
+    padding:16px 36px;
     margin:10px;
     display:inline-block;
     border-radius:40px;
     font-weight:600;
+    letter-spacing:.5px;
     min-height:48px;
     line-height:1.2;
-    transition:transform .3s, box-shadow .3s;
+    transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, background .35s ease;
 }
 
 .hero-buttons a:hover{
-    transform:translateY(-3px);
-    box-shadow:0 10px 30px rgba(0,0,0,.35);
+    transform:translateY(-4px) scale(1.04);
 }
 
 .btn-primary{
-    background:linear-gradient(135deg,#dc2626,#16a34a);
-    color:white;
+    background:var(--btn-green);
+    color:#fff;
+    box-shadow:0 10px 26px rgba(46,125,50,.4);
+}
+
+.btn-primary:hover{
+    background:var(--btn-green-hover);
+    box-shadow:var(--glow-green);
 }
 
 .btn-secondary{
-    border:2px solid rgba(255,255,255,.8);
-    color:white;
-    backdrop-filter:blur(6px);
+    background:var(--btn-red);
+    color:#fff;
+    box-shadow:0 10px 26px rgba(198,40,40,.4);
+}
+
+.btn-secondary:hover{
+    background:var(--btn-red-hover);
+    box-shadow:var(--glow-red);
+}
+
+/* Hero scroll cue */
+.scroll-cue{
+    position:absolute;
+    left:50%;
+    bottom:26px;
+    transform:translateX(-50%);
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:9px;
+    color:rgba(255,255,255,.82);
+    font-family:var(--font-head);
+    font-size:.68rem;
+    font-weight:600;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    text-decoration:none;
+    animation:cueFloat 2.6s ease-in-out infinite;
+}
+
+.scroll-cue .mouse{
+    width:25px;
+    height:40px;
+    border:2px solid rgba(255,255,255,.55);
+    border-radius:14px;
+    display:flex;
+    justify-content:center;
+    padding-top:7px;
+}
+
+.scroll-cue .mouse i{
+    width:3px;
+    height:7px;
+    border-radius:2px;
+    background:var(--gold);
+    animation:cueDot 2.6s ease-in-out infinite;
+}
+
+@keyframes cueFloat{
+    0%,100%{transform:translateX(-50%) translateY(0);}
+    50%{transform:translateX(-50%) translateY(6px);}
+}
+
+@keyframes cueDot{
+    0%,100%{opacity:0;transform:translateY(0);}
+    50%{opacity:1;transform:translateY(7px);}
+}
+
+@media (prefers-reduced-motion: reduce){
+    .scroll-cue,
+    .scroll-cue .mouse i{
+        animation:none;
+    }
 }
 
 /* SECTIONS */
 
 section{
-    padding:50px 8%;
+    padding:28px 6%;
+    position:relative;
+}
+
+/* Each content section is a floating box on the antique-white page,
+   keeping the same colour it had before. */
+#specialties .home-section-box{
+    background:
+        radial-gradient(circle at 85% 0%, rgba(212,175,55,0.10), transparent 45%),
+        var(--grad-light);
+}
+
+#menu .home-section-box{
+    background:
+        radial-gradient(circle at 15% 0%, rgba(212,175,55,0.10), transparent 45%),
+        radial-gradient(circle at 90% 100%, rgba(46,125,50,0.18), transparent 50%),
+        var(--grad-dark-green);
+}
+
+#about .home-section-box{
+    background:
+        radial-gradient(circle at 10% 10%, rgba(212,175,55,0.10), transparent 45%),
+        var(--grad-beige);
+}
+
+#gallery .home-section-box{
+    background:
+        radial-gradient(circle at 80% 10%, rgba(212,175,55,0.10), transparent 45%),
+        var(--grad-dark-brown);
+}
+
+#reviews .home-section-box{
+    background:
+        radial-gradient(circle at 15% 100%, rgba(198,40,40,0.08), transparent 45%),
+        var(--grad-light);
+}
+
+/* Contact keeps its full-width band */
+#contact{
+    padding:84px 8%;
+    background:
+        radial-gradient(circle at 85% 0%, rgba(212,175,55,0.12), transparent 45%),
+        var(--grad-dark-green);
 }
 
 .home-section-box{
     max-width:1200px;
     margin:0 auto;
-    padding:3px;
+    background:transparent;
+    border:none;
+    box-shadow:none;
+}
+
+/* Box styling for the requested sections */
+#specialties .home-section-box,
+#menu .home-section-box,
+#about .home-section-box,
+#gallery .home-section-box,
+#reviews .home-section-box{
+    padding:60px 48px;
     border-radius:28px;
-    background:linear-gradient(135deg,#dc2626,#ca8a04,#16a34a);
-    box-shadow:0 12px 40px rgba(0,0,0,0.35);
+    border:1px solid var(--border-light);
+    box-shadow:var(--shadow-soft);
 }
 
 .home-section-inner{
-    background:linear-gradient(145deg,rgba(69,10,10,0.92) 0%,rgba(20,83,45,0.92) 100%);
-    border-radius:25px;
-    padding:48px 36px;
+    background:transparent;
+    padding:0;
 }
 
 .section-title{
     text-align:center;
-    font-size:2.6rem;
-    margin-bottom:40px;
-    font-weight:800;
-    background:linear-gradient(90deg,#fca5a5,#86efac);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    background-clip:text;
+    font-family:var(--font-display);
+    font-size:clamp(2.3rem,4.8vw,3.3rem);
+    margin-bottom:52px;
+    font-weight:700;
+    letter-spacing:.5px;
+    color:var(--text);
+}
+
+/* Light section titles on dark bands */
+#menu .section-title,
+#gallery .section-title,
+#contact .section-title{
+    color:var(--text-light);
 }
 
 .section-title::after{
     content:'';
     display:block;
-    width:120px;
+    width:110px;
     height:4px;
-    margin:14px auto 0;
+    margin:18px auto 0;
     border-radius:2px;
-    background:linear-gradient(90deg,#dc2626,#16a34a);
+    background:var(--accent-line);
+    box-shadow:0 2px 10px rgba(212,175,55,0.4);
 }
 
 /* CATEGORIES */
@@ -213,19 +479,19 @@ section{
 }
 
 .card{
-    background:rgba(0,0,0,.3);
-    border:1px solid rgba(255,255,255,.12);
-    padding:36px 24px;
+    background:linear-gradient(150deg,#2C2C2C,#1E1E1E);
+    border:1px solid rgba(255,255,255,.08);
+    padding:40px 24px;
     text-align:center;
-    border-radius:20px;
-    transition:.4s;
-    backdrop-filter:blur(8px);
+    border-radius:24px;
+    transition:transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s ease, border-color .45s ease;
     position:relative;
     overflow:hidden;
     text-decoration:none;
     color:inherit;
     display:block;
     cursor:pointer;
+    box-shadow:var(--shadow-card);
 }
 
 .card::before{
@@ -233,7 +499,7 @@ section{
     position:absolute;
     top:0;left:0;right:0;
     height:4px;
-    background:linear-gradient(90deg,#dc2626,#16a34a);
+    background:var(--gold);
     transform:scaleX(0);
     transition:transform .4s;
 }
@@ -243,27 +509,43 @@ section{
 }
 
 .card:hover{
-    transform:translateY(-10px);
-    box-shadow:0 16px 35px rgba(220,38,38,.25);
-    border-color:rgba(134,239,172,.35);
+    transform:translateY(-12px) scale(1.02);
+    box-shadow:var(--shadow-hover);
+    border-color:rgba(212,175,55,.45);
+}
+
+.card .icon{
+    width:66px;
+    height:66px;
+    margin:0 auto 20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    font-size:34px;
+    line-height:1;
+    background:radial-gradient(circle at 32% 28%, rgba(212,175,55,.20), rgba(212,175,55,.05));
+    border:1px solid rgba(212,175,55,.4);
+    transition:transform .45s cubic-bezier(.22,1,.36,1), background .45s ease, border-color .45s ease;
+}
+
+.card:hover .icon{
+    transform:translateY(-2px) scale(1.08);
+    border-color:rgba(46,125,50,.45);
+    background:radial-gradient(circle at 32% 28%, rgba(46,125,50,.16), rgba(46,125,50,.04));
 }
 
 .card h3{
-    font-size:1.6rem;
-    margin-bottom:10px;
-    color:#fff;
+    font-size:1.4rem;
+    margin-bottom:8px;
+    color:var(--text-light);
+    letter-spacing:.3px;
 }
 
 .card p{
-    color:#ccc;
+    color:var(--text-light-secondary);
     font-size:.95rem;
-}
-
-.card span{
-    font-size:3rem;
-    display:block;
-    margin-bottom:12px;
-    filter:drop-shadow(0 4px 8px rgba(0,0,0,.3));
+    line-height:1.6;
 }
 
 /* Best Sellers */
@@ -275,18 +557,21 @@ section{
 }
 
 .menu-item{
-    background:rgba(0,0,0,.4);
-    border-radius:22px;
+    background:rgba(41,54,47,.72);
+    border-radius:24px;
     overflow:hidden;
-    border:1px solid rgba(255,255,255,.1);
-    transition:transform .4s, box-shadow .4s;
+    border:1px solid var(--border);
+    transition:transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s ease, border-color .45s ease;
     position:relative;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    box-shadow:var(--shadow-card);
 }
 
 .menu-item:hover{
-    transform:translateY(-8px);
-    box-shadow:0 20px 40px rgba(0,0,0,.4);
-    border-color:rgba(134,239,172,.3);
+    transform:translateY(-12px) scale(1.02);
+    box-shadow:var(--shadow-hover);
+    border-color:rgba(212,175,55,.4);
 }
 
 .menu-item .img-wrap{
@@ -307,11 +592,12 @@ section{
     width:100%;
     height:100%;
     object-fit:cover;
-    transition:transform .5s ease;
+    filter:saturate(1.08) contrast(1.04);
+    transition:transform .6s cubic-bezier(.22,1,.36,1);
 }
 
 .menu-item:hover img{
-    transform:scale(1.08);
+    transform:scale(1.09);
 }
 
 .menu-badge{
@@ -321,36 +607,40 @@ section{
     z-index:2;
     padding:6px 14px;
     border-radius:20px;
-    background:linear-gradient(135deg,#dc2626,#16a34a);
+    background:var(--btn-red);
+    color:#fff;
     font-size:.75rem;
     font-weight:700;
     letter-spacing:.5px;
     text-transform:uppercase;
+    box-shadow:0 6px 16px rgba(198,40,40,.4);
 }
 
 .menu-content{
-    padding:22px;
+    padding:24px;
 }
 
 .menu-content h3{
     font-size:1.25rem;
     margin-bottom:8px;
     line-height:1.3;
+    color:var(--text-light);
 }
 
 .menu-content p{
-    color:#bbb;
+    color:var(--text-light-secondary);
     font-size:.9rem;
     line-height:1.5;
 }
 
 .price{
     display:inline-block;
-    margin-top:12px;
-    padding:6px 16px;
+    margin-top:14px;
+    padding:6px 18px;
     border-radius:20px;
-    background:linear-gradient(135deg,rgba(220,38,38,.25),rgba(22,163,74,.25));
-    color:#86efac;
+    background:rgba(212,175,55,.16);
+    border:1px solid rgba(212,175,55,.35);
+    color:var(--gold);
     font-weight:700;
     font-size:1.15rem;
 }
@@ -370,25 +660,43 @@ section{
     height:auto;
     display:block;
     margin:0 auto;
-    border-radius:20px;
+    border-radius:24px;
     border:3px solid transparent;
-    background:linear-gradient(#111,#111) padding-box,
-                linear-gradient(135deg,#dc2626,#16a34a) border-box;
-    box-shadow:0 15px 40px rgba(0,0,0,.4);
+    background:linear-gradient(#fff,#fff) padding-box,
+                var(--accent-line) border-box;
+    box-shadow:var(--shadow-soft);
+    filter:saturate(1.06) contrast(1.03);
+    transition:transform .5s cubic-bezier(.22,1,.36,1), box-shadow .5s ease;
+}
+
+.about img:hover{
+    transform:translateY(-6px) scale(1.02);
+    box-shadow:var(--shadow-hover);
 }
 
 .about h2{
-    font-size:2.6rem;
+    font-family:var(--font-display);
+    font-size:clamp(2.1rem,4vw,3rem);
     margin-bottom:20px;
-    background:linear-gradient(90deg,#fca5a5,#86efac);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    background-clip:text;
+    font-weight:700;
+    letter-spacing:.5px;
+    color:var(--text);
+}
+
+.about h2::after{
+    content:'';
+    display:block;
+    width:90px;
+    height:4px;
+    margin:16px 0 0;
+    border-radius:2px;
+    background:var(--accent-line);
 }
 
 .about p{
-    color:#ddd;
-    line-height:1.8;
+    color:var(--text-secondary);
+    line-height:1.9;
+    font-size:1.02rem;
 }
 
 /* GALLERY */
@@ -405,15 +713,25 @@ section{
     aspect-ratio:1;
     object-fit:cover;
     display:block;
-    border-radius:15px;
-    transition:.4s;
-    border:2px solid rgba(255,255,255,.08);
+    position:relative;
+    border-radius:18px;
+    border:1px solid var(--border);
+    filter:saturate(1.06) contrast(1.04) brightness(.95);
+    box-shadow:0 12px 30px rgba(0,0,0,.35);
+    transition:transform .55s cubic-bezier(.22,1,.36,1), filter .5s ease, box-shadow .5s ease, opacity .5s ease;
+}
+
+.gallery:hover img{
+    opacity:.5;
 }
 
 .gallery img:hover{
-    transform:scale(1.04);
-    border-color:rgba(134,239,172,.4);
-    box-shadow:0 12px 30px rgba(0,0,0,.4);
+    opacity:1;
+    transform:scale(1.06);
+    filter:saturate(1.12) contrast(1.06) brightness(1.06);
+    box-shadow:0 24px 55px rgba(0,0,0,.5);
+    z-index:2;
+    border-color:rgba(212,175,55,.5);
 }
 
 /* REVIEWS */
@@ -425,41 +743,189 @@ section{
 }
 
 .review{
-    background:rgba(0,0,0,.35);
-    border:1px solid rgba(255,255,255,.1);
-    padding:30px;
-    border-radius:20px;
-    backdrop-filter:blur(8px);
-    transition:transform .3s;
+    background:rgba(255,255,255,.72);
+    border:1px solid var(--border-light);
+    padding:36px 30px 30px;
+    border-radius:24px;
+    transition:transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s ease, border-color .45s ease;
     position:relative;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    box-shadow:var(--shadow-card);
 }
 
 .review::before{
     content:'"';
     position:absolute;
-    top:10px;
-    left:18px;
-    font-size:3rem;
+    top:12px;
+    left:20px;
+    font-size:3.4rem;
     line-height:1;
-    color:rgba(220,38,38,.4);
+    color:rgba(212,175,55,.5);
     font-family:Georgia,serif;
 }
 
 .review:hover{
-    transform:translateY(-5px);
-    border-color:rgba(134,239,172,.3);
+    transform:translateY(-8px) scale(1.02);
+    border-color:rgba(212,175,55,.4);
+    box-shadow:var(--shadow-hover);
 }
 
 .review p{
     margin-top:10px;
-    color:#ddd;
+    color:var(--text-secondary);
     font-style:italic;
-    line-height:1.6;
+    line-height:1.7;
 }
 
 .stars{
-    color:gold;
+    color:var(--gold);
     font-size:1.2rem;
+    letter-spacing:1px;
+}
+
+/* Google reviews + social proof */
+.reviews-social{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:20px 28px;
+    margin-bottom:40px;
+}
+
+.google-rating-badge{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 22px;
+    border-radius:20px;
+    background:rgba(255,255,255,.85);
+    border:1px solid var(--border-light);
+    box-shadow:var(--shadow-card);
+}
+
+.google-rating-badge .g-icon{
+    width:28px;
+    height:28px;
+    flex-shrink:0;
+}
+
+.google-score{
+    font-size:1.8rem;
+    font-weight:800;
+    color:var(--text);
+    line-height:1;
+}
+
+.google-rating-badge .stars{
+    font-size:1rem;
+}
+
+.google-count{
+    font-size:.88rem;
+    color:var(--text-secondary);
+    font-weight:500;
+}
+
+.reviews-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+}
+
+.btn-google,
+.btn-instagram{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:12px 20px;
+    border-radius:30px;
+    font-size:.9rem;
+    font-weight:600;
+    text-decoration:none;
+    transition:transform .3s, box-shadow .3s;
+}
+
+.btn-google{
+    background:#fff;
+    color:var(--text);
+    border:1px solid var(--border-light);
+    box-shadow:var(--shadow-card);
+}
+
+.btn-google:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--shadow-soft);
+}
+
+.btn-instagram{
+    background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af);
+    color:#fff;
+    box-shadow:0 8px 22px rgba(221,42,123,.35);
+}
+
+.btn-instagram:hover{
+    transform:translateY(-2px) scale(1.02);
+    box-shadow:0 12px 28px rgba(221,42,123,.45);
+}
+
+.review-google::before{
+    display:none;
+}
+
+.review-head{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:12px;
+}
+
+.review-avatar{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:.85rem;
+    font-weight:700;
+    color:#fff;
+    flex-shrink:0;
+    text-transform:uppercase;
+}
+
+.review-avatar.av-1{background:linear-gradient(135deg,#5c6bc0,#3949ab);}
+.review-avatar.av-2{background:linear-gradient(135deg,#26a69a,#00897b);}
+.review-avatar.av-3{background:linear-gradient(135deg,#ef5350,#c62828);}
+
+.review-meta{
+    text-align:left;
+    min-width:0;
+}
+
+.review-meta strong{
+    display:block;
+    font-size:.95rem;
+    color:var(--text);
+    font-weight:600;
+}
+
+.review-source{
+    display:block;
+    font-size:.78rem;
+    color:var(--text-secondary);
+    margin-top:2px;
+}
+
+.review-google .stars{
+    margin-bottom:8px;
+}
+
+.review-google p{
+    font-style:normal;
+    text-align:left;
 }
 
 /* CONTACT */
@@ -468,44 +934,155 @@ section{
     text-align:center;
 }
 
+.contact-layout{
+    display:grid;
+    grid-template-columns:1fr 1.1fr;
+    gap:28px;
+    max-width:1100px;
+    margin:0 auto;
+    align-items:stretch;
+}
+
 .contact-box{
-    background:rgba(0,0,0,.25);
-    border:1px solid rgba(255,255,255,.12);
-    padding:40px;
+    background:rgba(41,54,47,.72);
+    border:1px solid var(--border);
+    padding:40px 32px;
+    border-radius:24px;
+    color:var(--text-light);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    box-shadow:var(--shadow-soft);
+    text-align:center;
+}
+
+.contact-map{
+    border-radius:24px;
+    overflow:hidden;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow-soft);
+    min-height:320px;
+    background:rgba(0,0,0,.2);
+}
+
+.contact-map-wrap{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.contact-map-wrap .map-link{
+    text-align:center;
+    margin-top:0;
+}
+
+.contact-map iframe{
+    display:block;
+    width:100%;
+    height:100%;
+    min-height:320px;
+    border:0;
+}
+
+.hours-row{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:10px 14px;
+}
+
+.open-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 14px;
     border-radius:20px;
-    max-width:700px;
-    margin:auto;
+    font-size:.82rem;
+    font-weight:700;
+    letter-spacing:.3px;
+    text-transform:uppercase;
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.18);
+}
+
+.open-dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    flex-shrink:0;
+    background:#9e9e9e;
+    box-shadow:0 0 0 3px rgba(158,158,158,.25);
+}
+
+.open-badge.is-open .open-dot{
+    background:#4caf50;
+    box-shadow:0 0 0 3px rgba(76,175,80,.3);
+    animation:openPulse 2s ease infinite;
+}
+
+.open-badge.is-closed .open-dot{
+    background:#9e9e9e;
+}
+
+.open-badge.is-open{
+    color:#a5d6a7;
+    border-color:rgba(76,175,80,.35);
+}
+
+.open-badge.is-closed{
+    color:#bdbdbd;
+}
+
+@keyframes openPulse{
+    0%,100%{opacity:1;}
+    50%{opacity:.55;}
 }
 
 .contact p{
-    margin:15px 0;
+    margin:16px 0;
+    color:var(--text-light);
+}
+
+.map-link{
+    display:inline-block;
+    margin-top:12px;
+    color:var(--gold);
+    font-weight:600;
+    font-size:.9rem;
+    text-decoration:none;
+}
+
+.map-link:hover{
+    color:#fff;
 }
 
 /* FOOTER */
 
 .detailed-menu-btn{
     display:block;
-    margin:44px auto 0;
-    padding:16px 36px;
+    margin:52px auto 0;
+    padding:16px 40px;
     border:none;
     border-radius:30px;
-    background:linear-gradient(135deg,#dc2626,#16a34a);
-    color:white;
+    background:var(--btn-green);
+    color:#fff;
     font-size:1.05rem;
     font-weight:600;
+    letter-spacing:.5px;
     cursor:pointer;
-    transition:transform .3s, box-shadow .3s;
-    box-shadow:0 8px 25px rgba(220,38,38,.3);
+    transition:background .35s, transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s;
+    box-shadow:0 10px 26px rgba(46,125,50,.4);
 }
 
 .detailed-menu-btn:hover{
-    transform:translateY(-3px);
-    box-shadow:0 12px 35px rgba(22,163,74,.35);
+    background:var(--btn-green-hover);
+    transform:translateY(-4px) scale(1.03);
+    box-shadow:var(--glow-green);
 }
 
 .gradient-line{
-    height:5px;
-    background:linear-gradient(90deg,#dc2626,#16a34a);
+    height:4px;
+    background:var(--accent-line);
 }
 
 /* MOBILE */
@@ -513,16 +1090,29 @@ section{
 @media(max-width:900px){
 
 section{
-    padding:40px max(5%, env(safe-area-inset-left, 0px)) 40px max(5%, env(safe-area-inset-right, 0px));
+    padding:18px max(4%, env(safe-area-inset-left, 0px)) 18px max(4%, env(safe-area-inset-right, 0px));
+}
+
+#contact{
+    padding:56px max(5%, env(safe-area-inset-left, 0px));
+}
+
+#specialties .home-section-box,
+#menu .home-section-box,
+#about .home-section-box,
+#gallery .home-section-box,
+#reviews .home-section-box{
+    padding:40px 22px;
+    border-radius:22px;
 }
 
 .home-section-inner{
-    padding:28px 18px;
+    padding:0;
 }
 
 .section-title{
     font-size:2rem;
-    margin-bottom:28px;
+    margin-bottom:34px;
 }
 
 .categories{
@@ -534,12 +1124,15 @@ section{
     padding:28px 16px;
 }
 
-.card span{
-    font-size:2.4rem;
+.card .icon{
+    width:58px;
+    height:58px;
+    margin-bottom:16px;
+    font-size:30px;
 }
 
 .card h3{
-    font-size:1.25rem;
+    font-size:1.2rem;
 }
 
 .about{
@@ -553,6 +1146,11 @@ section{
 }
 
 .hero h1{
+    font-size:clamp(2.5rem,12vw,3.5rem);
+    letter-spacing:2px;
+}
+
+.hero h2{
     font-size:clamp(2.5rem,12vw,3.5rem);
     letter-spacing:2px;
 }
@@ -591,11 +1189,32 @@ section{
     padding:24px 16px;
 }
 
-.contact-box p{
-    word-break:break-word;
+.contact-layout{
+    grid-template-columns:1fr;
+    gap:20px;
 }
 
-.review-grid{
+.contact-map,
+.contact-map iframe{
+    min-height:260px;
+}
+
+.reviews-social{
+    flex-direction:column;
+    gap:16px;
+}
+
+.reviews-actions{
+    width:100%;
+}
+
+.btn-google,
+.btn-instagram{
+    width:100%;
+    justify-content:center;
+}
+
+.review-grid{ 
     grid-template-columns:1fr;
 }
 
@@ -625,11 +1244,23 @@ section{
 
 @media(max-width:480px){
     section{
-        padding:32px max(4%, env(safe-area-inset-left, 0px)) 32px max(4%, env(safe-area-inset-right, 0px));
+        padding:14px max(3%, env(safe-area-inset-left, 0px)) 14px max(3%, env(safe-area-inset-right, 0px));
+    }
+
+    #contact{
+        padding:44px max(4%, env(safe-area-inset-left, 0px));
+    }
+
+    #specialties .home-section-box,
+    #menu .home-section-box,
+    #about .home-section-box,
+    #gallery .home-section-box,
+    #reviews .home-section-box{
+        padding:32px 18px;
     }
 
     .home-section-inner{
-        padding:22px 14px;
+        padding:0;
     }
 
     .section-title{
@@ -640,8 +1271,9 @@ section{
         grid-template-columns:1fr;
     }
 
-    .card span{
-        font-size:2rem;
+    .card .icon{
+        width:56px;
+        height:56px;
     }
 
     .gallery{
@@ -651,6 +1283,10 @@ section{
     .gallery img{
         aspect-ratio:4/3;
         border-radius:10px;
+    }
+
+    .scroll-cue{
+        display:none;
     }
 
     .hero .tagline{
@@ -676,6 +1312,17 @@ section{
         text-align:center;
         min-height:48px;
     }
+
+    .delivery-btns{
+        gap:8px;
+    }
+
+    .delivery-btn{
+        padding:12px 6px;
+        gap:5px;
+        letter-spacing:0;
+        font-size:clamp(0.72rem, 3.4vw, 0.9rem);
+    }
 }
 
 @media (hover:none){
@@ -693,11 +1340,14 @@ section{
 <body>
 
 <nav class="site-nav">
-    <a href="Index.html#home" class="logo-link"><img src="logo.jpeg" alt="FILFIL Café"></a>
+    <a href="index.html#home" class="logo-link"><img src="logo.jpeg" alt="FILFIL Café" width="72" height="72" decoding="async"></a>
     <button type="button" class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span class="nav-burger-lines" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </span>
+        <span class="nav-burger-label">Menu</span>
     </button>
     <div class="nav-menu" id="nav-menu">
         <ul>
@@ -727,16 +1377,16 @@ section{
 
 <section class="hero" id="home">
     <div class="hero-media" aria-hidden="true">
-        <video class="hero-video hero-video-mobile" autoplay muted loop playsinline preload="auto">
-            <source src="hero-mobile.mp4" type="video/mp4">
+        <video class="hero-video hero-video-mobile" autoplay muted loop playsinline preload="metadata">
+            <source src="Filfil new video mobile.mp4" type="video/mp4">
         </video>
-        <video class="hero-video hero-video-desktop" autoplay muted loop playsinline preload="auto">
-            <source src="hero-desktop.mp4" type="video/mp4">
+        <video class="hero-video hero-video-desktop" autoplay muted loop playsinline preload="metadata">
+            <source src="Filfil video dekstop.mp4" type="video/mp4">
         </video>
     </div>
     <div class="hero-content"> 
         <span class="tagline">Welcome to</span>
-        <h1>FILFIL</h1>
+        <h1>FILFIL </h1><h2>Café</h2>
 
         <p>
             Bold Flavors. Fresh Vibes.<br>
@@ -748,35 +1398,42 @@ section{
             <a href="https://wa.me/917997866006?text=Hello%20FILFIL%20Caf%C3%A9!%20I%20would%20like%20to%20place%20an%20order." class="btn-secondary" target="_blank" rel="noopener">Order on WhatsApp</a>
         </div>
     </div>
+    <a href="#specialties" class="scroll-cue" aria-label="Scroll to explore the menu">
+        <span class="mouse" aria-hidden="true"><i></i></span>
+        <span>Explore</span>
+    </a>
 </section>
 
 <section id="specialties">
     <div class="home-section-box">
         <div class="home-section-inner">
-            <h2 class="section-title">Our Specialties</h2>
+            <div class="section-head">
+                <span class="eyebrow">Taste the difference</span>
+                <h2 class="section-title">Our Specialties</h2>
+            </div>
 
             <div class="categories">
 
                 <a href="menu.html#burger" class="card">
-                    <span>🍔</span>
+                    <span class="icon" aria-hidden="true">🍔</span>
                     <h3>Burgers</h3>
                     <p>Juicy grilled perfection.</p>
                 </a>
 
                 <a href="menu.html#wrap" class="card">
-                    <span>🌯</span>
+                    <span class="icon" aria-hidden="true">🌯</span>
                     <h3>Wraps</h3>
                     <p>Fresh and flavorful.</p>
                 </a>
 
                 <a href="menu.html#mocktail" class="card">
-                    <span>🍹</span>
+                    <span class="icon" aria-hidden="true">🍹</span>
                     <h3>Mocktails</h3>
                     <p>Cool and refreshing.</p>
                 </a>
 
                 <a href="menu.html#waffle" class="card">
-                    <span>🧇</span>
+                    <span class="icon" aria-hidden="true">🧇</span>
                     <h3>Waffles</h3>
                     <p>Sweet happiness.</p>
                 </a>
@@ -789,14 +1446,17 @@ section{
 <section id="menu">
     <div class="home-section-box">
         <div class="home-section-inner">
-            <h2 class="section-title">Best Sellers</h2>
+            <div class="section-head">
+                <span class="eyebrow">Guest favourites</span>
+                <h2 class="section-title">Best Sellers</h2>
+            </div>
 
             <div class="menu-grid">
 
                 <div class="menu-item">
                     <div class="img-wrap">
                         <span class="menu-badge">Best Seller</span>
-                        <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.25 (1).jpeg" alt="Signature Beef Burger">
+                        <img src="Photos to be changed/Signature beef burger.jpg" alt="Signature Beef Burger" loading="lazy" decoding="async">
                     </div>
                     <div class="menu-content">
                         <h3>Signature Beef Burger</h3>
@@ -808,7 +1468,7 @@ section{
                 <div class="menu-item">
                     <div class="img-wrap">
                         <span class="menu-badge">Popular</span>
-                        <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.27.34.jpeg" alt="Chicken Zinger Wrap">
+                        <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.27.34.jpeg" alt="Chicken Zinger Wrap" loading="lazy" decoding="async">
                     </div>
                     <div class="menu-content">
                         <h3>Chicken Zinger Wrap</h3>
@@ -820,7 +1480,7 @@ section{
                 <div class="menu-item">
                     <div class="img-wrap">
                         <span class="menu-badge">Refreshing</span>
-                        <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.33 (3).jpeg" alt="Blue Lagoon Mocktail">
+                        <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.33 (3).jpeg" alt="Blue Lagoon Mocktail" loading="lazy" decoding="async">
                     </div>
                     <div class="menu-content">
                         <h3>Blue Lagoon Mocktail</h3>
@@ -832,12 +1492,36 @@ section{
                 <div class="menu-item">
                     <div class="img-wrap">
                         <span class="menu-badge">Must Try</span>
-                        <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.25.02.jpeg" alt="Triple Chocolate Bubble Waffle">
+                        <img src="Photos to be changed/Triple Chocolate Bubble Waffle.png" alt="Triple Chocolate Bubble Waffle" loading="lazy" decoding="async">
                     </div>
                     <div class="menu-content">
                         <h3>Triple Chocolate Bubble Waffle</h3>
                         <p>Warm bubble waffle with ice cream and chocolate drizzle.</p>
                         <div class="price">₹199</div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="img-wrap">
+                        <span class="menu-badge">Best Seller</span>
+                        <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.43.jpeg" alt="Chicken Loaded Fries" loading="lazy" decoding="async">
+                    </div>
+                    <div class="menu-content">
+                        <h3>Chicken Loaded Fries</h3>
+                        <p>Crispy fries loaded with juicy chicken and melted cheese.</p>
+                        <div class="price">₹149</div>
+                    </div>
+                </div>
+
+                <div class="menu-item">
+                    <div class="img-wrap">
+                        <span class="menu-badge">Popular</span>
+                        <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.31.jpeg" alt="Chicken Popcorn" loading="lazy" decoding="async">
+                    </div>
+                    <div class="menu-content">
+                        <h3>Chicken Popcorn</h3>
+                        <p>Golden, crunchy bite-sized chicken popcorn — perfect to snack on.</p>
+                        <div class="price">₹119</div>
                     </div>
                 </div>
 
@@ -852,9 +1536,10 @@ section{
         <div class="home-section-inner">
             <div class="about">
 
-                <img src="logo.jpeg" alt="FILFIL Café">
+                <img src="logo.jpeg" alt="FILFIL Café" loading="lazy" decoding="async">
 
                 <div>
+                    <span class="eyebrow">Our story</span>
                     <h2>About FILFIL</h2>
 
                     <p>
@@ -873,15 +1558,18 @@ section{
 <section id="gallery">
     <div class="home-section-box">
         <div class="home-section-inner">
-            <h2 class="section-title">Gallery</h2>
+            <div class="section-head">
+                <span class="eyebrow">A feast for the eyes</span>
+                <h2 class="section-title">Gallery</h2>
+            </div>
 
             <div class="gallery">
-                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.25.32.jpeg" alt="Double Decker Beef Burger">
-                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.43 (2).jpeg" alt="Cheese Loaded Fries">
-                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.40.jpeg" alt="Chicken Wrap">
-                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.33 (2).jpeg" alt="Virgin Mojito">
-                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.26.31.jpeg" alt="KitKat Brownie">
-                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.31 (2).jpeg" alt="Triple Chocolate Bubble">
+                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.25.32.jpeg" alt="Double Decker Beef Burger" loading="lazy" decoding="async">
+                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.43 (2).jpeg" alt="Cheese Loaded Fries" loading="lazy" decoding="async">
+                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.40.jpeg" alt="Chicken Wrap" loading="lazy" decoding="async">
+                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.33 (2).jpeg" alt="Virgin Mojito" loading="lazy" decoding="async">
+                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.26.31.jpeg" alt="KitKat Brownie" loading="lazy" decoding="async">
+                <img src="photos of menu/WhatsApp Image 2026-06-17 at 05.24.31 (2).jpeg" alt="Triple Chocolate Bubble" loading="lazy" decoding="async">
             </div>
         </div>
     </div>
@@ -890,23 +1578,62 @@ section{
 <section id="reviews">
     <div class="home-section-box">
         <div class="home-section-inner">
-            <h2 class="section-title">Customer Reviews</h2>
+            <div class="section-head">
+                <span class="eyebrow">Loved in Hyderabad</span>
+                <h2 class="section-title">Customer Reviews</h2>
+            </div>
+
+            <div class="reviews-social">
+                <div class="google-rating-badge">
+                    <svg class="g-icon" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303C33.654 32.657 29.083 36 24 36c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C33.64 6.053 28.991 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="m6.306 14.691 6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C33.64 6.053 28.991 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.048 0-9.606-3.07-11.469-7.436l-6.52 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
+                    <span class="google-score">4.9</span>
+                    <div>
+                        <div class="stars" aria-label="4.9 out of 5 stars">★★★★★</div>
+                        <span class="google-count">187+ Google reviews</span>
+                    </div>
+                </div>
+                <div class="reviews-actions">
+                    <a class="btn-google" href="https://www.google.com/maps/search/FilFil+Cafe+New+Mallepally+Hyderabad" target="_blank" rel="noopener noreferrer">View on Google Maps</a>
+                    <a class="btn-instagram" href="https://www.instagram.com/filfilcafe2025/" target="_blank" rel="noopener noreferrer" aria-label="Follow FILFIL Café on Instagram">📷 Follow @filfilcafe2025</a>
+                </div>
+            </div>
 
             <div class="review-grid">
 
-                <div class="review">
-                    <div class="stars">★★★★★</div>
-                    <p>"Best burger I've had in a long time!"</p>
+                <div class="review review-google">
+                    <div class="review-head">
+                        <div class="review-avatar av-1" aria-hidden="true">AN</div>
+                        <div class="review-meta">
+                            <strong>arsh nain</strong>
+                            <span class="review-source">on Google · 1 month ago</span>
+                        </div>
+                    </div>
+                    <div class="stars" aria-hidden="true">★★★★★</div>
+                    <p>The Signature Beef Burger was incredibly juicy with a rich charred aroma. The Cheese Chicken Loaded Fries were crispy, cheesy, and generously topped — an amazing comfort meal with bold flavors.</p>
                 </div>
 
-                <div class="review">
-                    <div class="stars">★★★★★</div>
-                    <p>"Amazing wraps and refreshing mocktails."</p>
+                <div class="review review-google">
+                    <div class="review-head">
+                        <div class="review-avatar av-2" aria-hidden="true">AB</div>
+                        <div class="review-meta">
+                            <strong>Asiya Begum</strong>
+                            <span class="review-source">on Google · 4 months ago</span>
+                        </div>
+                    </div>
+                    <div class="stars" aria-hidden="true">★★★★★</div>
+                    <p>Food: 5 · Service: 5 · Atmosphere: 5. A wonderful experience — everything was fresh, flavorful, and served with a smile.</p>
                 </div>
 
-                <div class="review">
-                    <div class="stars">★★★★★</div>
-                    <p>"The waffles are absolutely incredible."</p>
+                <div class="review review-google">
+                    <div class="review-head">
+                        <div class="review-avatar av-3" aria-hidden="true">RM</div>
+                        <div class="review-meta">
+                            <strong>Rahel Mohammed</strong>
+                            <span class="review-source">on Google · 6 months ago</span>
+                        </div>
+                    </div>
+                    <div class="stars" aria-hidden="true">★★★★★</div>
+                    <p>Food with hygiene and great taste at FilFil Café opposite Madina Bazar. Perfect for takeaway and dine-in — highly recommended!</p>
                 </div>
 
             </div>
@@ -917,21 +1644,49 @@ section{
 <section id="contact">
     <div class="home-section-box">
         <div class="home-section-inner">
-            <h2 class="section-title">Contact Us</h2>
+            <div class="section-head">
+                <span class="eyebrow">Come say hello</span>
+                <h2 class="section-title">Contact Us</h2>
+            </div>
+
+            <div class="contact-layout">
 
             <div class="contact-box">
 
                 <p>📍 Bazar Ghat, New Mallepally, Hyderabad, Telangana 500001</p>
 
-                <p>📞 <a href="tel:+917997866006" style="color:#86efac;text-decoration:none;">+91 799 786 6006</a></p>
+                <p>📞 <a href="tel:+917997866006" style="color:var(--gold);font-weight:600;text-decoration:none;">+91 799 786 6006</a></p>
 
-                <p>📧 <a href="mailto:info@filfilcafe.com" style="color:#86efac;text-decoration:none;">info@filfilcafe.com</a></p>
+                <p>📧 <a href="mailto:info@filfilcafe.com" style="color:var(--gold);font-weight:600;text-decoration:none;">info@filfilcafe.com</a></p>
 
-                <p>🕒 Mon - Sun: 10:00 AM - 11:00 PM</p>
+                <p class="hours-row">
+                    <span id="open-status" class="open-badge is-closed" aria-live="polite">
+                        <span class="open-dot" aria-hidden="true"></span>
+                        <span class="open-text">Checking…</span>
+                    </span>
+                    <span>Mon – Sun: 10:00 AM – 11:00 PM</span>
+                </p>
 
-                <a class="order-btn" href="https://wa.me/917997866006?text=Hello%20FILFIL%20Caf%C3%A9!%20I%20would%20like%20to%20place%20an%20order." target="_blank" rel="noopener">
-                    Order on WhatsApp
-                </a>
+                <div class="delivery-btns">
+                    <a class="delivery-btn btn-whatsapp" href="https://wa.me/917997866006?text=Hello%20FILFIL%20Caf%C3%A9!%20I%20would%20like%20to%20place%20an%20order." target="_blank" rel="noopener" aria-label="Order FILFIL Café on WhatsApp">💬 WhatsApp</a>
+                    <a class="delivery-btn btn-swiggy" href="https://www.swiggy.com/city/hyderabad/filfil-cafe-banjara-hills-new-mallepally-rest1056278" target="_blank" rel="noopener noreferrer" aria-label="Order FILFIL Café on Swiggy">🛵 Swiggy</a>
+                    <a class="delivery-btn btn-zomato" href="https://www.zomato.com/hyderabad/filfil-cafe-khairatabad" target="_blank" rel="noopener noreferrer" aria-label="Order FILFIL Café on Zomato">🍽️ Zomato</a>
+                </div>
+
+            </div>
+
+            <div class="contact-map-wrap">
+            <div class="contact-map">
+                <iframe
+                    title="FILFIL Café location on Google Maps"
+                    src="https://maps.google.com/maps?q=FilFil+Cafe,+1-3-665+Circle+17,+New+Mallepally,+Khairatabad,+Hyderabad,+Telangana+500001&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen>
+                </iframe>
+            </div>
+                <a class="map-link" href="https://www.google.com/maps/dir/?api=1&amp;destination=FilFil+Cafe,+New+Mallepally,+Hyderabad" target="_blank" rel="noopener noreferrer">Get directions →</a>
+            </div>
 
             </div>
         </div>
@@ -946,6 +1701,9 @@ section{
     <div class="footer-contact">
         <a href="mailto:info@filfilcafe.com">info@filfilcafe.com</a>
         <a href="https://wa.me/917997866006" target="_blank" rel="noopener">+91 799 786 6006</a>
+        <a href="https://www.instagram.com/filfilcafe2025/" target="_blank" rel="noopener noreferrer">Instagram @filfilcafe2025</a>
+        <a href="https://www.swiggy.com/city/hyderabad/filfil-cafe-banjara-hills-new-mallepally-rest1056278" target="_blank" rel="noopener noreferrer">Order on Swiggy</a>
+        <a href="https://www.zomato.com/hyderabad/filfil-cafe-khairatabad" target="_blank" rel="noopener noreferrer">Order on Zomato</a>
     </div>
     <br>
     <p>© 2026 FILFIL Café. All Rights Reserved.</p>
@@ -957,7 +1715,7 @@ section{
         <h2>Your Cart</h2>
         <button type="button" id="cart-close" aria-label="Close cart">&times;</button>
     </div>
-    <p id="cart-empty">Your cart is empty. <a href="menu.html" style="color:#22c55e;">Browse the menu</a> to add items!</p>
+    <p id="cart-empty">Your cart is empty. <a href="menu.html" style="color:var(--green);font-weight:600;">Browse the menu</a> to add items!</p>
     <div id="cart-items"></div>
     <div id="cart-footer" style="display:none">
         <div class="cart-total-row">
@@ -972,7 +1730,39 @@ section{
 
 <script src="nav.js"></script>
 <script src="cart.js"></script>
+<script src="reveal.js"></script>
 <script>
+(function () {
+    const badge = document.getElementById('open-status');
+    if (!badge) return;
+
+    const textEl = badge.querySelector('.open-text');
+    const OPEN = 10 * 60;
+    const CLOSE = 23 * 60;
+
+    function updateOpenStatus() {
+        const parts = new Intl.DateTimeFormat('en-IN', {
+            timeZone: 'Asia/Kolkata',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: false
+        }).formatToParts(new Date());
+
+        const hour = Number(parts.find((p) => p.type === 'hour').value);
+        const minute = Number(parts.find((p) => p.type === 'minute').value);
+        const now = hour * 60 + minute;
+        const isOpen = now >= OPEN && now < CLOSE;
+
+        badge.classList.toggle('is-open', isOpen);
+        badge.classList.toggle('is-closed', !isOpen);
+        if (textEl) textEl.textContent = isOpen ? 'Open now' : 'Closed';
+        badge.setAttribute('aria-label', isOpen ? 'Café is open now' : 'Café is currently closed');
+    }
+
+    updateOpenStatus();
+    setInterval(updateOpenStatus, 60000);
+})();
+
 (function () {
     const videos = document.querySelectorAll('.hero-video');
     if (!videos.length) return;

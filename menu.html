@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>FILFIL Café Menu</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
 
 <style>
@@ -12,6 +14,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
     font-family: 'Poppins', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
@@ -20,7 +26,13 @@ body {
     min-height: 100dvh;
     overflow-x: hidden;
     padding: max(110px, calc(env(safe-area-inset-top, 0px) + 88px)) max(5%, env(safe-area-inset-right, 0px)) max(40px, env(safe-area-inset-bottom, 0px)) max(5%, env(safe-area-inset-left, 0px));
-    color: #fff;
+    background:
+        radial-gradient(circle at 12% 6%, rgba(212, 175, 55, 0.10), transparent 38%),
+        radial-gradient(circle at 88% 24%, rgba(46, 125, 50, 0.10), transparent 40%),
+        radial-gradient(circle at 50% 100%, rgba(198, 40, 40, 0.06), transparent 45%),
+        #FAEBD7;
+    background-attachment: fixed;
+    color: var(--text);
 }
 
 /* Page header */
@@ -35,9 +47,26 @@ body {
 }
 
 .page-header h1 {
-    font-size: 2.4rem;
-    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    font-weight: 800;
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 4vw, 3rem);
+    color: var(--text);
+    font-weight: 700;
+    letter-spacing: .5px;
+}
+
+.page-header .eyebrow {
+    margin-bottom: 8px;
+}
+
+.page-header h1::after {
+    content: '';
+    display: block;
+    width: 90px;
+    height: 4px;
+    margin-top: 12px;
+    border-radius: 2px;
+    background: var(--accent-line);
+    box-shadow: 0 2px 10px rgba(212, 175, 55, 0.4);
 }
 
 .page-header-actions {
@@ -52,22 +81,22 @@ body {
     gap: 8px;
     padding: 10px 20px;
     min-height: 44px;
-    background: rgba(56, 239, 125, 0.25);
-    border: 1px solid rgba(56, 239, 125, 0.5);
-    color: white;
+    background: var(--btn-green);
+    border: 1px solid transparent;
+    color: #fff;
     text-decoration: none;
     border-radius: 50px;
     font-size: 15px;
     font-weight: 600;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
+    transition: all 0.35s ease;
 }
 
 .btn-download:hover {
-    background: #38ef7d;
-    color: #000;
-    transform: translateX(3px);
-    box-shadow: 0 5px 15px rgba(56, 239, 125, 0.4);
+    background: var(--btn-green-hover);
+    color: #fff;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: var(--glow-green);
 }
 
 .flip-card.flipped .flip-card-inner {
@@ -91,26 +120,53 @@ body {
 }
 
 .menu-buttons button {
-    padding: 10px 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 11px 22px;
+    border: 1px solid var(--border-light);
     border-radius: 30px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    color: white;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--text);
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: var(--shadow-card);
 }
 
 .menu-buttons button:hover,
 .menu-buttons button.active {
-    background: linear-gradient(135deg, #dc2626, #16a34a);
+    background: var(--btn-green);
     border-color: transparent;
-    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.35);
+    box-shadow: var(--glow-green);
     transform: translateY(-3px);
     color: #fff;
+}
+
+.menu-buttons button.is-coming-soon {
+    position: relative;
+    overflow: hidden;
+    border-top-left-radius: 6px;
+    padding-left: 26px;
+}
+
+.soon-ribbon {
+    position: absolute;
+    top: 12px;
+    left: -30px;
+    z-index: 2;
+    width: 116px;
+    transform: rotate(-45deg);
+    background: var(--btn-red);
+    color: #fff;
+    font-size: 7px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.7;
+    box-shadow: 0 3px 8px rgba(198, 40, 40, 0.4);
+    pointer-events: none;
 }
 
 /* Card Grid Styling */
@@ -122,10 +178,21 @@ body {
     margin: auto;
 }
 
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(26px); }
+    to   { opacity: 1; transform: none; }
+}
+
 .flip-card {
     background: transparent;
     height: 400px;
     perspective: 1200px;
+    animation: cardIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.flip-card:hover {
+    transform: translateY(-8px);
 }
 
 .flip-card-inner {
@@ -144,13 +211,74 @@ body {
     backface-visibility: hidden;
     border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-light);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .flip-card { animation: none; }
+}
+
+/* Coming soon placeholder card */
+.flip-card.coming-soon {
+    perspective: none;
+    cursor: default;
+}
+
+.flip-card.coming-soon:hover {
+    transform: translateY(-6px);
+}
+
+.coming-soon-inner {
+    height: 100%;
+    border-radius: 24px;
+    border: 1px dashed rgba(212, 175, 55, 0.55);
+    background:
+        radial-gradient(120% 90% at 50% 0%, rgba(212, 175, 55, 0.12), transparent 60%),
+        var(--grad-light);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px 26px;
+    gap: 12px;
+}
+
+.coming-soon-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 18px;
+    border-radius: 30px;
+    background: var(--btn-green);
+    color: #fff;
+    font-family: var(--font-head);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    box-shadow: 0 8px 20px rgba(46, 125, 50, 0.32);
+}
+
+.coming-soon-title {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.3px;
+}
+
+.coming-soon-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 240px;
 }
 
 /* Front Side styling */
 .flip-card-front {
-    background: #111;
+    background: var(--card);
     display: flex;
     flex-direction: column;
 }
@@ -158,7 +286,7 @@ body {
 .photo-slot {
     flex: 1;
     position: relative;
-    background: linear-gradient(145deg, #7f1d1d 0%, #14532d 100%);
+    background: #f0ede8;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -168,7 +296,7 @@ body {
 .photo-slot::after {
     content: 'Add photo';
     position: absolute;
-    color: rgba(255, 255, 255, 0.25);
+    color: rgba(34, 34, 34, 0.25);
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -181,7 +309,8 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    filter: saturate(1.08) contrast(1.04);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .photo-slot img.loaded {
@@ -193,7 +322,7 @@ body {
 }
 
 .flip-card:hover .photo-slot img.loaded {
-    transform: scale(1.05);
+    transform: scale(1.07);
 }
 
 .item-info .price-row .item-price-front {
@@ -202,7 +331,8 @@ body {
 
 .item-info {
     padding: 16px 20px;
-    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    background: var(--card);
+    border-top: 1px solid var(--border-light);
     text-align: center;
 }
 
@@ -211,7 +341,7 @@ body {
     width: auto;
     padding: 0;
     background: none;
-    color: white;
+    color: var(--text);
     font-size: 18px;
     font-weight: 700;
     letter-spacing: 0.3px;
@@ -222,13 +352,13 @@ body {
     margin-top: 6px;
     font-size: 22px;
     font-weight: 800;
-    color: #ffd700;
+    color: var(--green);
 }
 
 /* Back Side styling */
 .flip-card-back {
-    background: rgba(255, 255, 255, 0.95);
-    color: #1a1a1a;
+    background: var(--card);
+    color: var(--text);
     transform: rotateY(180deg);
     display: flex;
     flex-direction: column;
@@ -239,7 +369,7 @@ body {
 }
 
 .flip-card-back h3 {
-    color: #dc2626;
+    color: var(--red);
     font-size: 22px;
     margin-bottom: 16px;
     font-weight: 700;
@@ -253,8 +383,8 @@ body {
 .price {
     font-size: 28px;
     font-weight: 800;
-    color: #16a34a;
-    background: rgba(22, 163, 74, 0.15);
+    color: var(--green);
+    background: rgba(46, 125, 50, 0.12);
     padding: 4px 16px;
     border-radius: 12px;
 }
@@ -263,13 +393,13 @@ body {
     position: absolute;
     top: 15px;
     right: -30px;
-    background: #ff4d4d;
-    color: white;
+    background: var(--btn-red);
+    color: #fff;
     padding: 6px 35px;
     font-size: 12px;
     font-weight: bold;
     transform: rotate(45deg);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 10px rgba(34, 34, 34, 0.2);
 }
 
 .hidden {
@@ -411,7 +541,7 @@ body {
 <body>
 
 <nav class="site-nav">
-    <a href="Index.html" class="logo-link"><img src="logo.jpeg" alt="FILFIL Café"></a>
+    <a href="index.html" class="logo-link"><img src="logo.jpeg" alt="FILFIL Café" width="72" height="72" decoding="async"></a>
     <button type="button" class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-menu">
         <span class="nav-burger-lines" aria-hidden="true">
             <span></span>
@@ -422,13 +552,13 @@ body {
     </button>
     <div class="nav-menu" id="nav-menu" aria-hidden="true">
         <ul>
-            <li><a href="Index.html#home">Home</a></li>
-            <li><a href="Index.html#menu">Best Sellers</a></li>
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#menu">Best Sellers</a></li>
             <li><a href="menu.html" class="active">Full Menu</a></li>
-            <li><a href="Index.html#about">About</a></li>
-            <li><a href="Index.html#gallery">Gallery</a></li>
-            <li><a href="Index.html#reviews">Reviews</a></li>
-            <li><a href="Index.html#contact">Contact</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#gallery">Gallery</a></li>
+            <li><a href="index.html#reviews">Reviews</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
         </ul>
         <div class="nav-contact">
             <a href="mailto:info@filfilcafe.com">📧 info@filfilcafe.com</a>
@@ -448,7 +578,10 @@ body {
 <div class="nav-overlay" id="nav-overlay"></div>
 
 <div class="page-header">
-    <h1>FILFIL Café Menu</h1>
+    <div class="page-header-title">
+        <span class="eyebrow">Freshly made to order</span>
+        <h1>FILFIL Café Menu</h1>
+    </div>
     <div class="page-header-actions">
         <a href="menu.pdf" class="btn-download" download="menu.pdf">↓ Download Full Menu</a>
     </div>
@@ -466,14 +599,14 @@ const categories = [
     { id: 'combo', label: '🍱 Combos' },
     { id: 'wrap', label: '🌯 Wraps' },
     { id: 'fries', label: '🍟 Fries' },
-    { id: 'salad', label: '🥗 Salads' },
+    { id: 'salad', label: '🥗 Salads', comingSoon: true },
     { id: 'quickbite', label: '🍗 Quick Bites' },
-    { id: 'sandwich', label: '🥪 Sandwiches' },
+    { id: 'sandwich', label: '🥪 Sandwiches', comingSoon: true },
     { id: 'momo', label: '🥟 Momos' },
     { id: 'waffle', label: '🧇 Waffles' },
     { id: 'dessert', label: '🍰 Desserts' },
     { id: 'mocktail', label: '🍹 Mocktails' },
-    { id: 'beverage', label: '🥤 Beverages' },
+    { id: 'beverage', label: '🥤 Beverages', comingSoon: true },
     { id: 'icecream', label: '🍦 Ice Creams' }
 ];
 
@@ -508,11 +641,6 @@ const menuItems = [
     { category: 'fries', name: 'Chicken Loaded Fries', price: '₹149' },
     { category: 'fries', name: 'Beef Loaded Fries', price: '₹179' },
 
-    { category: 'salad', name: 'Sprouts Salad', price: '₹149' },
-    { category: 'salad', name: 'Veggie Salad', price: '₹149' },
-    { category: 'salad', name: 'Chicken Salad', price: '₹179' },
-    { category: 'salad', name: 'Beef Salad', price: '₹199' },
-
     { category: 'quickbite', name: 'Chicken Popcorn', price: '₹119' },
     { category: 'quickbite', name: 'Chicken Cheese Balls', price: '₹129' },
     { category: 'quickbite', name: 'Chicken Strips', price: '₹149' },
@@ -523,12 +651,6 @@ const menuItems = [
     { category: 'quickbite', name: 'Cheese Corn Triangles', price: '₹129' },
     { category: 'quickbite', name: 'Chilli Garlic Potato Shots', price: '₹129' },
     { category: 'quickbite', name: 'Veggie Pizza Pockets', price: '₹149' },
-
-    { category: 'sandwich', name: 'Veg Sandwich', price: '₹79' },
-    { category: 'sandwich', name: 'Veg Cheese Sandwich', price: '₹99' },
-    { category: 'sandwich', name: 'Chicken Sandwich', price: '₹79' },
-    { category: 'sandwich', name: 'Chicken Cheese Sandwich', price: '₹99' },
-    { category: 'sandwich', name: 'Chicken Tikka Sandwich', price: '₹119' },
 
     { category: 'momo', name: 'Veg Steamed Momos', price: '₹99' },
     { category: 'momo', name: 'Chicken Steamed Momos', price: '₹119' },
@@ -549,7 +671,6 @@ const menuItems = [
     { category: 'dessert', name: 'Almond Brownie', price: '₹139' },
     { category: 'dessert', name: 'KitKat Brownie', price: '₹149' },
     { category: 'dessert', name: '5 Star Brownie', price: '₹149' },
-    { category: 'dessert', name: 'Choco Lava', price: '₹99' },
 
     { category: 'mocktail', name: 'Blue Lagoon', price: '₹79' },
     { category: 'mocktail', name: 'Virgin Mojito', price: '₹79' },
@@ -557,14 +678,6 @@ const menuItems = [
     { category: 'mocktail', name: 'Strawberry Bliss', price: '₹79' },
     { category: 'mocktail', name: 'Green Apple Fizz', price: '₹79' },
     { category: 'mocktail', name: 'Melon Mania', price: '₹79' },
-
-    { category: 'beverage', name: 'Chocolate Milk Shake', price: '₹99' },
-    { category: 'beverage', name: 'Strawberry Milk Shake', price: '₹99' },
-    { category: 'beverage', name: 'Seasonal Fruit Milk Shake', price: '₹129' },
-    { category: 'beverage', name: 'Cold Coffee', price: '₹99' },
-    { category: 'beverage', name: 'Cold Coffee with Ice Cream', price: '₹149' },
-    { category: 'beverage', name: 'Water Bottle', price: '₹10' },
-    { category: 'beverage', name: 'Campa', price: '₹10' },
 
     { category: 'icecream', name: 'Single Scoop', price: '₹59' },
     { category: 'icecream', name: 'Double Scoop', price: '₹99' },
@@ -576,6 +689,59 @@ const menuItems = [
 function photoPath(filename) {
     return 'photos of menu/' + encodeURIComponent(filename);
 }
+
+const updatedPhotoFolder = 'Photos to be changed/';
+
+/* Newer, higher-quality photos supplied by name. These take priority
+   over the originals in the photoMap below. */
+const updatedPhotoMap = {
+    'Single Scoop': 'Ice cream one scoop.png',
+    'Double Scoop': 'Double Scoop.png',
+    'Triple Chocolate Sundae': 'Triple Chocolate Sundae.png',
+    'Choco Berry Sundae': 'Choco Berry Sundae.png',
+    'Nutty Overload' : 'Nutty Overload.png',
+    'Classic Beef': 'Classic Beef burger.jpeg',
+    'UFO Beef': 'UFO Burger.png',
+    'Signature Beef': 'Signature beef burger.jpg',
+    'Classic Chicken': 'Classic chicken burger.png',
+    'Chicken Zinger': 'Zinger Chicken burger.jpeg',
+    'Signature Chicken': 'Signature chicken burger.jpg',
+
+    'Falafel Sabbah Wrap': 'Falafel sabbah wrap.png',
+    'Classic Beef Wrap': 'Classic beef wrap.webp',
+    'Signature Beef Wrap': 'Signature beef wrap.jpeg',
+    'Classic Chicken Wrap': 'classic chicken wrap.jpg',
+    'Signature Chicken Wrap': 'signature chicken wrap.jpeg',
+
+    'Plain French Fries': 'salted french fries.webp',
+
+    'Chicken Kebab Shots': 'Chicken Kebab Shots.png',
+    'Cheese Corn Triangles': 'Cheese corn triangles.png',
+
+    'Chicken Steamed Momos': 'Chicken Steamed Momos.png',
+    'Veg Steamed Momos': 'Chicken Steamed Momos.png',
+    'Chicken Fried Momos': 'chicken fried momos.jpg',
+    'Veg Fried Momos': 'chicken fried momos.jpg',
+    'Chicken Kurkure Momos': 'Chicken Kurkure Momos.jpg',
+    'Veg Kurkure Momos': 'Chicken Kurkure Momos.jpg',
+
+    'Popsicle': 'Popsicle waffle.png',
+    'Triple Chocolate Bubble': 'Triple Chocolate Bubble Waffle.png',
+    'Extra Toppings (Strawberries/Banana/Choco Chips/Ice Cream Scoop)': 'waffle extra topping.png',
+    'Ice Cream Cone Bubble': 'Ice Cream Cone Bubblereal.png',
+
+
+    'Mini Burger + French Fries + Juice': 'Mini burger+french fries+juice.png',
+    'Mini Burger + Chicken Popcorn/Cheese Balls + Juice': 'Mini Burger+Chicken PopcornCheese Balls+Juice.png',
+    'Meal Box (4 Mini Burgers + Popcorn/Cheese Balls + Fries + 2 Campa)': 'Meal Box 4 Mini Burgers + PopcornCheese Balls + Fries + 2 Campa.png',
+
+    'Single Scoop': 'Ice cream one scoop.png',
+    'Double Scoop': 'Double Scoop.png',
+    'Triple Chocolate Sundae': 'Triple Chocolate Sundae.png',
+    'Choco Berry Sundae': 'Choco Berry Sundae.png',
+    'Nutty Overload': 'Nutty Overload.png'
+
+};
 
 const photoMap = {
     'Mini Beef': 'WhatsApp Image 2026-06-17 at 05.24.27.jpeg',
@@ -612,8 +778,6 @@ const photoMap = {
 
     'Popsicle': 'WhatsApp Image 2026-06-17 at 05.25.29.jpeg',
     'Triple Chocolate Bubble': 'WhatsApp Image 2026-06-17 at 05.24.31 (2).jpeg',
-    'Ice Cream Cone Bubble': 'WhatsApp Image 2026-06-17 at 05.25.02.jpeg',
-
     'Apricot Delight': 'WhatsApp Image 2026-06-17 at 05.24.22.jpeg',
     'Aseed': 'WhatsApp Image 2026-06-17 at 05.24.32.jpeg',
     'Plain Brownie': 'WhatsApp Image 2026-06-17 at 05.24.24 (1).jpeg',
@@ -625,6 +789,8 @@ const photoMap = {
     'Blue Lagoon': 'WhatsApp Image 2026-06-17 at 05.24.33 (3).jpeg',
     'Virgin Mojito': 'WhatsApp Image 2026-06-17 at 05.24.33 (2).jpeg',
     'Cranberry Blast': 'WhatsApp Image 2026-06-17 at 05.24.33 (1).jpeg',
+    'Strawberry Bliss': 'WhatsApp Image 2026-06-17 at 05.24.33 (1).jpeg',
+    'Melon Mania': 'WhatsApp Image 2026-06-17 at 05.24.33 (1).jpeg',
     'Green Apple Fizz': 'WhatsApp Image 2026-06-17 at 05.24.34.jpeg'
 };
 
@@ -638,6 +804,10 @@ function buildMenu() {
         btn.id = cat.id;
         btn.dataset.category = cat.id;
         btn.textContent = cat.label;
+        if (cat.comingSoon) {
+            btn.classList.add('is-coming-soon');
+            btn.insertAdjacentHTML('afterbegin', '<span class="soon-ribbon" aria-label="Coming soon">Coming Soon</span>');
+        }
         btn.onclick = () => {
             history.replaceState(null, '', '#' + cat.id);
             filterMenu(cat.id, btn);
@@ -647,8 +817,11 @@ function buildMenu() {
     });
 
     menuItems.forEach(item => {
+        const updatedFile = updatedPhotoMap[item.name];
         const photoFile = photoMap[item.name];
-        const photoSrc = photoFile ? photoPath(photoFile) : '';
+        const photoSrc = updatedFile
+            ? updatedPhotoFolder + encodeURIComponent(updatedFile)
+            : (photoFile ? photoPath(photoFile) : '');
         const id = itemId(item.name);
         const card = document.createElement('div');
         card.className = `flip-card ${item.category}`;
@@ -658,7 +831,7 @@ function buildMenu() {
                 <div class="flip-card-front">
                     <span class="item-qty-badge" hidden>0</span>
                     <div class="photo-slot">
-                        ${photoSrc ? `<img src="${photoSrc}" alt="${item.name}">` : ''}
+                        ${photoSrc ? `<img src="${photoSrc}" alt="${item.name}" loading="lazy" decoding="async">` : ''}
                     </div>
                     <div class="item-info">
                         <div class="item-title">${item.name}</div>
@@ -700,6 +873,20 @@ function buildMenu() {
         gridEl.appendChild(card);
     });
 
+    categories.filter(cat => cat.comingSoon).forEach(cat => {
+        const card = document.createElement('div');
+        card.className = `flip-card coming-soon ${cat.id}`;
+        const label = cat.label.replace(/^[^\p{L}]+/u, '').trim();
+        card.innerHTML = `
+            <div class="coming-soon-inner">
+                <span class="coming-soon-badge">Coming Soon</span>
+                <h3 class="coming-soon-title">${label}</h3>
+                <p class="coming-soon-text">We're crafting something special. Stay tuned!</p>
+            </div>
+        `;
+        gridEl.appendChild(card);
+    });
+
     updateMenuCardQuantities();
 }
 
@@ -730,7 +917,9 @@ function applyCategoryFromHash() {
 buildMenu();
 applyCategoryFromHash();
 window.addEventListener('hashchange', applyCategoryFromHash);
+if (typeof window.refreshReveal === 'function') window.refreshReveal();
 </script>
+<script src="reveal.js"></script>
 
 <div id="cart-overlay"></div>
 <aside id="cart-panel">
@@ -757,6 +946,7 @@ window.addEventListener('hashchange', applyCategoryFromHash);
     <div class="footer-contact">
         <a href="mailto:info@filfilcafe.com">info@filfilcafe.com</a>
         <a href="https://wa.me/917997866006" target="_blank" rel="noopener">+91 799 786 6006</a>
+        <a href="https://www.instagram.com/filfilcafe2025/" target="_blank" rel="noopener noreferrer">Instagram @filfilcafe2025</a>
     </div>
     <p>© 2026 FILFIL Café. All Rights Reserved.</p>
 </footer>
