@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>FILFIL Café | Bold Flavors. Fresh Vibes.</title>
+<title>FILFIL Café</title>
+<link rel="icon" type="image/jpeg" href="logo.jpeg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1853,30 +1854,55 @@ section{
     if (!badge) return;
 
     const textEl = badge.querySelector('.open-text');
-    const OPEN = 10 * 60;
-    const CLOSE = 23 * 60;
+    // 2:30 PM – 1:00 AM (Asia/Kolkata), overnight
+    const OPEN = 14 * 60 + 30;
+    const CLOSE = 1 * 60;
+    let timer = null;
 
-    function updateOpenStatus() {
+    function getIndiaMinutes() {
         const parts = new Intl.DateTimeFormat('en-IN', {
             timeZone: 'Asia/Kolkata',
             hour: 'numeric',
             minute: 'numeric',
+            second: 'numeric',
             hour12: false
         }).formatToParts(new Date());
 
-        const hour = Number(parts.find((p) => p.type === 'hour').value);
+        const hour = Number(parts.find((p) => p.type === 'hour').value) % 24;
         const minute = Number(parts.find((p) => p.type === 'minute').value);
-        const now = hour * 60 + minute;
-        const isOpen = now >= OPEN && now < CLOSE;
+        const second = Number(parts.find((p) => p.type === 'second').value);
+        return { now: hour * 60 + minute, second };
+    }
+
+    function msUntilNextBoundary(now, second) {
+        // Flip at the next open (2:30 PM) or close (1:00 AM)
+        const target = now >= OPEN || now < CLOSE ? CLOSE : OPEN;
+        let minsLeft = target - now;
+        if (minsLeft <= 0) minsLeft += 24 * 60;
+        return Math.max(1000, minsLeft * 60 * 1000 - second * 1000);
+    }
+
+    function updateOpenStatus() {
+        const { now, second } = getIndiaMinutes();
+        const isOpen = now >= OPEN || now < CLOSE;
 
         badge.classList.toggle('is-open', isOpen);
         badge.classList.toggle('is-closed', !isOpen);
         if (textEl) textEl.textContent = isOpen ? 'Open now' : 'Closed';
         badge.setAttribute('aria-label', isOpen ? 'Café is open now' : 'Café is currently closed');
+
+        clearTimeout(timer);
+        // Cap delay so background tabs still catch open/close flips
+        const delay = Math.min(msUntilNextBoundary(now, second), 30000);
+        timer = setTimeout(updateOpenStatus, delay);
     }
 
     updateOpenStatus();
-    setInterval(updateOpenStatus, 60000);
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') updateOpenStatus();
+    });
+    window.addEventListener('pageshow', updateOpenStatus);
+    window.addEventListener('focus', updateOpenStatus);
 })();
 
 (function () {
